@@ -269,6 +269,18 @@
   .mat-label { font-family:'Work Sans', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.05em; color:var(--ivory); position:relative; z-index:1; }
   .mat-desc { font-family:'Work Sans', sans-serif; font-style:italic; font-weight:300; font-size:14px; color:rgba(253,245,230,0.6); margin-top:4px; position:relative; z-index:1; }
 
+  /* ---------- THE MARK ---------- */
+  .mark-construction-grid { display:grid; grid-template-columns: 1fr 1fr; gap:60px; align-items:center; margin-bottom:100px; }
+  .clearspace-row { display:flex; align-items:center; gap:16px; margin-bottom:100px; }
+  .do-not-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; }
+
+  @media (max-width: 760px) {
+    .mark-construction-grid { grid-template-columns:1fr; gap:32px; }
+    .mark-construction-grid > div:first-child { padding:32px !important; }
+    .clearspace-row { flex-direction:column; align-items:flex-start; gap:20px; }
+    .do-not-grid { grid-template-columns:repeat(2, 1fr); }
+  }
+
   /* ---------- ARCHETYPE CARDS ---------- */
   .arche-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:30px; }
   .arche-card { border:1px solid var(--line); border-radius:4px; padding:30px 26px 34px; background:var(--void-2); transition: transform 0.35s ease, border-color 0.35s ease; }
@@ -284,6 +296,12 @@
 
   @media (max-width: 860px) {
     .arche-grid { grid-template-columns:1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .arche-card { padding:22px 18px 26px; }
+    .arche-glyphs { gap:14px; }
+    .arche-swatch { padding:10px; }
   }
 
   /* ---------- CANONIZED GLYPHS ---------- */
