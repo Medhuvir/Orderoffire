@@ -110,15 +110,33 @@
     <p style="color:var(--concrete); max-width:420px; font-size:17px;">Maintain clearspace equal to the height of one flame tine (roughly 20% of the medallion diameter) on all sides. Nothing else, no wordmark, no rule line, no photograph, crosses this boundary.</p>
   </div>
 
-  <div class="label" style="margin-bottom:24px;">On dark, on light, in metal only</div>
-  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-bottom:100px;">
-    <div style="background:var(--void-2); border:1px solid var(--line); border-radius:4px; padding:40px; display:flex; justify-content:center;"><svg viewBox="0 0 200 200" width="100"><use href="#emblem-medallion"/></svg></div>
-    <div style="background:var(--ivory); border-radius:4px; padding:40px; display:flex; justify-content:center;"><svg viewBox="0 0 200 200" width="100"><use href="#emblem-medallion"/></svg></div>
-    <div style="background:var(--earth); border-radius:4px; padding:40px; display:flex; justify-content:center;">
-      <svg viewBox="0 0 200 200" width="100">
-        <circle cx="100" cy="100" r="96" fill="none" stroke="var(--gilded)" stroke-width="3"/>
-        <g fill="var(--gilded)"><use href="#emblem-mark"/></g>
-      </svg>
+  <div class="label" style="margin-bottom:24px;">On dark, on light, in metal only, on color</div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:20px; margin-bottom:100px;">
+    <div>
+      <div style="background:var(--void-2); border:1px solid var(--line); border-radius:4px; padding:40px; display:flex; justify-content:center;"><svg viewBox="0 0 200 200" width="100"><use href="#emblem-medallion"/></svg></div>
+      <p class="arche-note" style="margin-top:14px; text-align:center;">On dark</p>
+    </div>
+    <div>
+      <div style="background:var(--ivory); border-radius:4px; padding:40px; display:flex; justify-content:center;"><svg viewBox="0 0 200 200" width="100"><use href="#emblem-medallion"/></svg></div>
+      <p class="arche-note" style="margin-top:14px; text-align:center;">On light</p>
+    </div>
+    <div>
+      <div style="background:var(--earth); border-radius:4px; padding:40px; display:flex; justify-content:center;">
+        <svg viewBox="0 0 200 200" width="100">
+          <circle cx="100" cy="100" r="96" fill="none" stroke="var(--gilded)" stroke-width="3"/>
+          <g fill="var(--gilded)"><use href="#emblem-mark"/></g>
+        </svg>
+      </div>
+      <p class="arche-note" style="margin-top:14px; text-align:center;">In metal only</p>
+    </div>
+    <div>
+      <div style="background:linear-gradient(135deg, #833AB4, #E06E04 45%, #FCAF45 70%, #6B5B95); border-radius:4px; padding:40px; display:flex; justify-content:center;">
+        <svg viewBox="0 0 200 200" width="100">
+          <circle cx="100" cy="100" r="96" fill="none" stroke="var(--ivory)" stroke-width="3"/>
+          <g fill="var(--ivory)"><use href="#emblem-mark"/></g>
+        </svg>
+      </div>
+      <p class="arche-note" style="margin-top:14px; text-align:center;">On color &mdash; Instagram dark mode, or any colored background: use the outlined, metal-only mark, never the filled medallion.</p>
     </div>
   </div>
 
