@@ -285,8 +285,8 @@
   .arche-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:30px; }
   .arche-card { border:1px solid var(--line); border-radius:4px; padding:30px 26px 34px; background:var(--void-2); transition: transform 0.35s ease, border-color 0.35s ease; }
   .arche-card:hover { transform: translateY(-6px); border-color: var(--bronze); }
-  .arche-glyphs { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
-  .arche-swatch { border-radius:4px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:14px; }
+  .arche-glyphs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; }
+  .arche-swatch { border-radius:4px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:22px; }
   .arche-swatch.light { background: linear-gradient(160deg, var(--ivory), #f2e6cf); }
   .arche-swatch.dark { background: var(--earth); }
   .arche-swatch img { width:100%; height:100%; object-fit:contain; }
@@ -299,9 +299,9 @@
   }
 
   @media (max-width: 480px) {
-    .arche-card { padding:22px 18px 26px; }
-    .arche-glyphs { gap:14px; }
-    .arche-swatch { padding:10px; }
+    .arche-card { padding:26px 22px 30px; }
+    .arche-glyphs { max-width:280px; margin-left:auto; margin-right:auto; gap:14px; }
+    .arche-swatch { padding:24px; }
   }
 
   /* ---------- CANONIZED GLYPHS ---------- */
