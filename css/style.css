@@ -283,13 +283,13 @@
 
   /* ---------- ARCHETYPE CARDS ---------- */
   .arche-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:30px; }
-  .arche-card { border:1px solid var(--line); border-radius:4px; padding:30px 26px 34px; background:var(--void-2); transition: transform 0.35s ease, border-color 0.35s ease; }
+  .arche-card { border:1px solid var(--line); border-radius:4px; padding:30px 26px 34px; background:var(--void-2); transition: transform 0.35s ease, border-color 0.35s ease; min-width:0; }
   .arche-card:hover { transform: translateY(-6px); border-color: var(--bronze); }
-  .arche-glyphs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; }
-  .arche-swatch { border-radius:4px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:22px; }
+  .arche-glyphs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; min-width:0; }
+  .arche-swatch { border-radius:4px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:22px; min-width:0; overflow:hidden; }
   .arche-swatch.light { background: linear-gradient(160deg, var(--ivory), #f2e6cf); }
   .arche-swatch.dark { background: var(--earth); }
-  .arche-swatch img { width:100%; height:100%; object-fit:contain; }
+  .arche-swatch img { display:block; max-width:100%; max-height:100%; width:100%; height:100%; object-fit:contain; }
   .arche-name { font-family:'Work Sans', sans-serif; font-weight:600; font-size:22px; letter-spacing:0.02em; margin-bottom:6px; }
   .arche-sac { margin-bottom:14px; display:block; }
   .arche-note { color:var(--concrete); font-size:16px; }
