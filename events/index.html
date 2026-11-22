@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  ORDER OF FIRE — RITUAL LANDING TEMPLATE
+  ---------------------------------------------------------------
+  Copy and imagery are drawn from orderoffire.com (home, /philosophy,
+  /events, /apply). To reuse for another ritual, edit:
+    1. data-model on <header class="hero"> — the .glb turned in the hero
+       (data-spin = speed in rad/s)
+    2. The when / where lines (hero meta, ticker, "The Fire Is Lit")
+    3. To show a live countdown once a date is fixed, uncomment the
+       countdown block and set data-countdown (ISO date with UTC offset)
+    4. Photos live in assets/ritual/
+  ---------------------------------------------------------------
+-->
+<title>The Ritual · The Order Of Fire</title>
+<meta name="description" content="The Order of Fire's next Fire Ritual will be held in Arizona in late March 2027. Apply to join The First Men.">
+<meta property="og:title" content="The Ritual · The Order Of Fire">
+<meta property="og:description" content="The next Fire Ritual: Arizona, late March 2027. Apply to join The First Men.">
+<meta property="og:image" content="assets/ritual/sun-line.jpg">
+<meta name="theme-color" content="#150c05">
+<link rel="icon" href="../images/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/nat2szh.css">
+<link rel="stylesheet" href="events.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Primary">
+  <a href="#top" class="nav-brand">
+    <img src="../images/order-of-fire-mark-earth.svg" alt="">
+    <span>The Order Of Fire</span>
+  </a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="#ritual">The Ritual</a>
+    <a href="#positives">Holy Positives</a>
+    <a href="#archetypes">Archetypes</a>
+    <a href="#rituals">Past Rituals</a>
+    <a href="#join" class="btn btn-fire">Apply to Join</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top" data-oof-hero data-model="assets/emblem.glb">
+  <canvas class="hero-canvas" aria-hidden="true"></canvas>
+  <img class="hero-fallback" src="../images/archetypes/father-dark.png" alt="">
+  <div class="hero-shade"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow rise d1">
+      <span class="dot"></span>
+      <span class="label">The Order Of Fire · The Next Fire Ritual</span>
+    </div>
+    <h1 class="hero-title rise d2">The <span class="gild">Ritual</span></h1>
+    <div class="hero-meta rise d3">
+      <span>Late March 2027</span>
+      <span>Arizona</span>
+      <span>For The First Men</span>
+    </div>
+    <div class="hero-actions rise d4">
+      <a href="#join" class="btn btn-fire">Apply to Join <span class="arrow">→</span></a>
+      <a href="#ritual" class="btn btn-ghost">The Fire Ritual</a>
+    </div>
+  </div>
+
+  <div class="hero-glyph-tag rise d5" aria-hidden="true">
+    <div class="ring"></div>
+    <div class="label">Solar Symbol</div>
+    <div class="name">The Father</div>
+  </div>
+
+  <svg class="scroll-cue" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M4 8 L12 16 L20 8" stroke="#E3BB63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</header>
+
+<!-- ============ TICKER ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>The Ritual</span><i></i>
+    <span class="hollow">Arizona · March 2027</span><i></i>
+    <span>Stay Solar</span><i></i>
+    <span class="hollow">Men of the Earth, looking forever upward</span><i></i>
+  </div>
+</div>
+
+<!-- ============ THE RITUAL ============ -->
+<section id="ritual">
+  <div class="wrap details-grid">
+    <div>
+      <div class="kicker reveal"><span class="num">01</span><div class="rule"></div><span class="label">The Ritual</span></div>
+      <h2 class="section-title reveal r1">The Fire Is Lit in March</h2>
+      <p class="section-sub reveal r2">The Order of Fire's next Fire Ritual will be held in Arizona in late March 2027. If you wish to attend, apply to join The First Men.</p>
+      <!-- Uncomment once the date is fixed:
+      <div class="countdown reveal r3" data-countdown="2027-03-27T18:00:00-07:00" role="timer" aria-label="Time until the ritual">
+        <div><b data-unit="d">00</b><small>Days</small></div>
+        <div><b data-unit="h">00</b><small>Hours</small></div>
+        <div><b data-unit="m">00</b><small>Minutes</small></div>
+        <div><b data-unit="s">00</b><small>Seconds</small></div>
+      </div>
+      -->
+    </div>
+    <div class="facts">
+      <div class="fact reveal r1"><span class="label">When</span><p>Late March<small>2027 · exact dates go to members</small></p></div>
+      <div class="fact reveal r2"><span class="label">Where</span><p>Arizona<small>Under the open desert sky</small></p></div>
+      <div class="fact reveal r3"><span class="label">Who</span><p>The First Men<small>A fraternal order for Solar Idealists</small></p></div>
+      <div class="fact reveal r4"><span class="label">Lineage</span><p>16 Rituals<small>Performed by the Order as of Nov 2026</small></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHOTO BAND / SACRED ============ -->
+<section class="photo-band" aria-label="Men facing the sun in the desert">
+  <img class="photo-band-img" src="assets/ritual/sun-line.jpg" alt="Men of the Order standing in silhouette facing the setting sun in the desert">
+  <div class="photo-band-shade"></div>
+  <div class="wrap">
+    <blockquote class="reveal">
+      <p>“If we cannot determine what is sacred to us, then everything is profane by default.”</p>
+      <cite class="label">Fire in the Dark</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ============ SOLAR IDEALISM ============ -->
+<section class="rite">
+  <div class="wrap rite-grid">
+    <div class="rite-seal reveal">
+      <img src="../images/archetypes/father-dark.png" alt="The Father solar symbol">
+    </div>
+    <div class="rite-copy">
+      <div class="kicker reveal"><span class="num">02</span><div class="rule"></div><span class="label">Solar Idealism</span></div>
+      <h2 class="section-title reveal r1">Men of the Future</h2>
+      <blockquote class="glyph-meaning reveal r2">
+        <span class="label">The Order</span>
+        The Order of Fire is the manifestation of Solar Idealism, a mythic philosophy for men.
+      </blockquote>
+      <p class="reveal r3">Solar Culture recognizes the power of individual and group rituals. The Fire Ritual is where that philosophy is enacted: light over darkness, order over chaos, truth over falsehood.</p>
+      <p class="reveal r4">It is not a spectacle to watch. It is a rite men stand inside, together, as The First Men.</p>
+      <a href="https://orderoffire.com/philosophy/" class="btn btn-ghost reveal r5">Read the Philosophy <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOLY POSITIVES ============ -->
+<section id="positives">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">03</span><div class="rule"></div><span class="label">The Holy Positives</span></div>
+    <h2 class="section-title reveal r1">What Men Hold Sacred</h2>
+    <p class="section-sub reveal r2">Ten affirmations shared across the Order. Each names what a man chooses, and what he refuses.</p>
+    <ol class="positives reveal">
+      <li style="--i:0"><span class="p-num">I</span><span class="p-virtue">Order</span><span class="p-than">is better than</span><span class="p-vice">chaos</span></li>
+      <li style="--i:1"><span class="p-num">II</span><span class="p-virtue">Integrity</span><span class="p-than">is better than</span><span class="p-vice">corruption</span></li>
+      <li style="--i:2"><span class="p-num">III</span><span class="p-virtue">Health and Vitality</span><span class="p-than">is better than</span><span class="p-vice">sickness</span></li>
+      <li style="--i:3"><span class="p-num">IV</span><span class="p-virtue">Beauty</span><span class="p-than">is better than</span><span class="p-vice">ugliness</span></li>
+      <li style="--i:4"><span class="p-num">V</span><span class="p-virtue">Strength</span><span class="p-than">is better than</span><span class="p-vice">weakness</span></li>
+      <li style="--i:5"><span class="p-num">VI</span><span class="p-virtue">Courage</span><span class="p-than">is better than</span><span class="p-vice">fear</span></li>
+      <li style="--i:6"><span class="p-num">VII</span><span class="p-virtue">Competence</span><span class="p-than">is better than</span><span class="p-vice">incompetence</span></li>
+      <li style="--i:7"><span class="p-num">VIII</span><span class="p-virtue">Fortitude</span><span class="p-than">is better than</span><span class="p-vice">fragility</span></li>
+      <li style="--i:8"><span class="p-num">IX</span><span class="p-virtue">Emotional Control</span><span class="p-than">is better than</span><span class="p-vice">hysteria</span></li>
+      <li style="--i:9"><span class="p-num">X</span><span class="p-virtue">Self-Determination</span><span class="p-than">is better than</span><span class="p-vice">servility</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ ARCHETYPES ============ -->
+<section id="archetypes" class="gatherings">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">04</span><div class="rule"></div><span class="label">The Solar Symbols</span></div>
+    <h2 class="section-title reveal r1">Three Guardians of Order</h2>
+    <div class="gather-grid">
+      <div class="gather reveal r1">
+        <img class="g-icon" src="../images/archetypes/father-dark.png" alt="">
+        <span class="date">I</span>
+        <h3>The Father</h3>
+        <p>The Father creates and oversees Order.</p>
+      </div>
+      <div class="gather reveal r2">
+        <img class="g-icon" src="../images/archetypes/striker-dark.png" alt="">
+        <span class="date">II</span>
+        <h3>The Striker</h3>
+        <p>The Striker champions Order.</p>
+      </div>
+      <div class="gather reveal r3">
+        <img class="g-icon" src="../images/archetypes/lord-of-earth-dark.png" alt="">
+        <span class="date">III</span>
+        <h3>The Lord of the Earth</h3>
+        <p>The Lord of the Earth perpetuates Order.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAST RITUALS ============ -->
+<section id="rituals">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">05</span><div class="rule"></div><span class="label">Previous Rituals</span></div>
+    <h2 class="section-title reveal r1">Sixteen Fires</h2>
+    <p class="section-sub reveal r2">As of November 2026, the Order of Fire has performed 16 Fire Rituals, from the salt flats of Utah to the Arizona desert.</p>
+    <div class="gallery">
+      <figure class="g-wide reveal r1"><img src="assets/ritual/torch-valley.jpg" alt="Men holding torches in silhouette in a desert valley at dusk" loading="lazy"></figure>
+      <figure class="g-tall reveal r2"><img src="assets/ritual/fire-column.jpg" alt="A man in silhouette behind a column of fire at dusk" loading="lazy"></figure>
+      <figure class="reveal r1"><img src="assets/ritual/marked.jpg" alt="A man marked with red paint beside the ritual fire" loading="lazy"></figure>
+      <figure class="reveal r2"><img src="assets/ritual/crossed-torches.jpg" alt="Two men holding crossed flaming torches at sunset" loading="lazy"></figure>
+      <figure class="g-tall reveal r3"><img src="assets/ritual/firelight.jpg" alt="Two men sitting close at dusk, lit by firelight" loading="lazy"></figure>
+      <figure class="g-wide reveal r1"><img src="assets/ritual/bvlls-arizona.jpg" alt="The bvlls present at the Arizona 2026 Ritual Alignment" loading="lazy"></figure>
+      <figure class="reveal r2"><img src="assets/ritual/hand-on-head.jpg" alt="A man seated on the desert ground with another man's hand on his head" loading="lazy"></figure>
+      <figure class="reveal r3"><img src="assets/ritual/sun-cross.jpg" alt="A straw sun-cross wreath raised on a pole in the desert at sunset" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOIN ============ -->
+<section id="join" class="rite">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">06</span><div class="rule"></div><span class="label">Membership</span></div>
+    <h2 class="section-title reveal r1">Join The First Men</h2>
+    <p class="section-sub reveal r2">The First Men is a fraternal order for Solar Idealists. The Ritual is held for its members. Being one of The First Men requires effort. It's not a disposable identity.</p>
+
+    <div class="steps-path reveal" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
+    <div class="tiers">
+      <div class="tier reveal r1">
+        <span class="tier-num" aria-hidden="true">I</span>
+        <span class="label">Step I</span>
+        <h3>Apply</h3>
+        <p class="tier-copy">You do not have to be perfect to join. You have to be a Solar Idealist with First Man energy. Tell us who you are.</p>
+        <a href="https://forms.gle/J1Uafgitata7LKc99" class="btn btn-fire" target="_blank" rel="noopener">Apply Now <span class="arrow">→</span></a>
+      </div>
+      <div class="tier featured reveal r2">
+        <span class="tier-num" aria-hidden="true">II</span>
+        <span class="label">Step II</span>
+        <h3>Join a Fire</h3>
+        <p class="tier-copy">Members gather in regional Fires across the South, the Northeast, the central and western US, Australia, Western Canada and Europe.</p>
+        <a href="https://orderoffire.com/apply/" class="btn btn-ghost">How It Works</a>
+      </div>
+      <div class="tier reveal r3">
+        <span class="tier-num" aria-hidden="true">III</span>
+        <span class="label">Step III</span>
+        <h3>Stand at the Ritual</h3>
+        <p class="tier-copy">Come to Arizona in late March 2027 and take your place at the fire with your brothers in the Order.</p>
+        <a href="#ritual" class="btn btn-ghost">The Ritual</a>
+      </div>
+    </div>
+
+    <div class="who">
+      <div class="who-head reveal">
+        <span class="label">Who Joins</span>
+        <h3>Men From Every Walk</h3>
+      </div>
+      <div class="who-cols">
+        <div class="who-col reveal r1"><h4>Family</h4><ul><li style="--i:0">Fathers</li><li style="--i:1">Married Men</li><li style="--i:2">Single Men</li><li style="--i:3">Men in their 20s–50s</li></ul></div>
+        <div class="who-col reveal r2"><h4>Work</h4><ul><li style="--i:0">Blue Collar</li><li style="--i:1">White Collar</li><li style="--i:2">Tech</li><li style="--i:3">Entrepreneurs</li></ul></div>
+        <div class="who-col reveal r3"><h4>Service</h4><ul><li style="--i:0">First Responders</li><li style="--i:1">Military &amp; Ex-Military</li></ul></div>
+        <div class="who-col reveal r4"><h4>Craft &amp; Body</h4><ul><li style="--i:0">Trainers</li><li style="--i:1">Athletes</li><li style="--i:2">Musicians</li><li style="--i:3">Artists</li><li style="--i:4">Writers</li><li style="--i:5">Craftsmen</li></ul></div>
+      </div>
+      <div class="who-thread reveal">
+        <span class="label">The Common Thread</span>
+        <strong>Solar Idealists</strong>
+      </div>
+      <p class="who-note reveal">Can't make the Ritual? The Order also welcomes aligned members who don't have time to participate but simply support its work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CALL ============ -->
+<section class="call">
+  <canvas class="topo-canvas" data-topo-motion data-topo-crosses="false" aria-hidden="true"></canvas>
+  <div class="call-shade"></div>
+  <div class="wrap">
+    <img class="seal reveal" src="../images/order-of-fire-mark-gilded.svg" alt="The Order Of Fire mark">
+    <h2 class="reveal r1">Stay Solar</h2>
+    <p class="reveal r2">Men of the Earth, looking forever upward. The fire is lit in Arizona this March.</p>
+    <a href="https://forms.gle/J1Uafgitata7LKc99" class="btn btn-fire reveal r3" target="_blank" rel="noopener">Apply to Join The First Men <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="https://orderoffire.com/" class="nav-brand">
+      <img src="../images/order-of-fire-mark-gilded.svg" alt="" style="filter:none">
+      <span>The Order Of Fire</span>
+    </a>
+    <nav aria-label="Footer">
+      <a href="https://orderoffire.com/philosophy/">Philosophy</a>
+      <a href="https://orderoffire.com/events/">Events</a>
+      <a href="https://orderoffire.com/apply/">Apply</a>
+      <a href="https://orderoffire.substack.com/">Substack</a>
+    </nav>
+    <small>© 2026 Jack Donovan and The Order of Fire</small>
+  </div>
+</footer>
+
+<script src="page.js"></script>
+<script src="topo-motion.js"></script>
+<script type="module" src="hero.js"></script>
+</body>
+</html>
