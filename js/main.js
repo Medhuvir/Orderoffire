@@ -34,6 +34,32 @@ if (navToggle && navLinks) {
   }));
 }
 
+// nav: see-through over the hero, ivory record plate once the hero scrolls away
+const topnav = document.getElementById('topnav');
+const heroEl = document.querySelector('.hero');
+if (topnav && heroEl) {
+  new IntersectionObserver(([e]) => topnav.classList.toggle('solid', !e.isIntersecting), {
+    rootMargin: '-75px 0px 0px 0px',
+  }).observe(heroEl);
+}
+
+// photo bands: slow parallax on the image while the band crosses the screen
+const bandImgs = document.querySelectorAll('.photo-band-img');
+if (bandImgs.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let ticking = false;
+  const drift = () => {
+    ticking = false;
+    bandImgs.forEach(img => {
+      const r = img.parentElement.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > innerHeight + 100) return;
+      const k = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+      img.style.transform = `translate3d(0, ${(k * -6).toFixed(2)}%, 0)`;
+    });
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(drift); } }, { passive: true });
+  drift();
+}
+
 // staggered scroll reveals, with the event page's brand easing.
 // Each section's blocks rise into view; rows and grids reveal their items one by one.
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
@@ -71,4 +97,5 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'Intersect
       else mark(block, 0);
     });
   });
+  document.querySelectorAll('.photo-band blockquote').forEach(q => mark(q, 0));
 }

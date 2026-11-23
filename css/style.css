@@ -72,9 +72,11 @@
   ::selection { background: var(--orange); color: var(--void); }
 
   /* ---------- NAV — Record header / bvll seal plate ---------- */
+  /* Over the hero the nav is see-through (ivory type on the fire); once the hero
+     scrolls away, or the menu opens, it becomes the ivory record plate. js/main.js adds .solid. */
   nav#topnav {
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: 0; left: 0; right: 0;
     z-index: 100;
     display: flex;
     align-items: center;
@@ -82,17 +84,32 @@
     gap: 20px;
     height: 75px;
     padding: 0 clamp(18px, 4vw, 32px);
-    background: linear-gradient(160deg, var(--ivory), #f2e6cf);
-    border-bottom: 1px solid rgba(74,47,27,0.3);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    background: linear-gradient(180deg, rgba(21,12,5,0.55), rgba(21,12,5,0));
+    border-bottom: 1px solid transparent;
+    box-shadow: none;
+    --nav-ink: var(--ivory);
+    --nav-mark: var(--gilded);
+    --nav-link: rgba(253,245,230,0.7);
+    transition: background 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
   }
+  nav#topnav.solid,
+  nav#topnav:has(.nav-toggle.open) {
+    background: linear-gradient(160deg, var(--ivory), #f2e6cf);
+    border-bottom-color: rgba(74,47,27,0.3);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    --nav-ink: var(--earth);
+    --nav-mark: var(--earth);
+    --nav-link: rgba(74,47,27,0.65);
+  }
+  section[id] { scroll-margin-top: 75px; }
   .nav-brand {
     display: flex;
     align-items: center;
     gap: 14px;
     height: 100%;
     text-decoration: none;
-    color: var(--earth);
+    color: var(--nav-ink);
+    transition: color 0.5s var(--ease);
     font-family: 'dharma-gothic-e', sans-serif;
     font-weight: 600;
     font-size: 26px;
@@ -101,7 +118,7 @@
     flex-shrink: 0;
     white-space: nowrap;
   }
-  .nav-brand svg { width: 36px; height: 36px; flex-shrink: 0; }
+  .nav-brand svg { width: 36px; height: 36px; flex-shrink: 0; color: var(--nav-mark); transition: color 0.5s var(--ease); }
   nav a {
     font-family: 'Work Sans', sans-serif;
     font-weight: 600;
@@ -109,7 +126,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(74,47,27,0.65);
+    color: var(--nav-link);
     position: relative;
     padding-bottom: 4px;
     transition: color 0.3s var(--ease);
@@ -123,10 +140,10 @@
     background: var(--orange);
     transition: width 0.3s var(--ease);
   }
-  nav a.active, nav a:hover { color: var(--earth); }
+  nav a.active, nav a:hover { color: var(--nav-ink); }
   nav a.active::after, nav a:hover::after { width: 100%; }
   .nav-brand::after { content: none; }
-  .nav-brand.active, .nav-brand:hover { color: var(--earth); }
+  .nav-brand.active, .nav-brand:hover { color: var(--nav-ink); }
 
   .nav-toggle {
     display: flex;
@@ -146,8 +163,8 @@
     display: block;
     width: 100%;
     height: 3px;
-    background: var(--earth);
-    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    background: var(--nav-ink);
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), background 0.5s var(--ease);
   }
   .nav-toggle.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
@@ -391,3 +408,14 @@
   .topo-footer-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 20px; }
   .topo-footer-inner svg { opacity: 0.9; filter: drop-shadow(0 10px 30px rgba(224,110,4,0.2)); }
   .topo-footer .label { color: var(--pebble); }
+
+  /* ---------- PHOTO BANDS (full-bleed breaks between sections, from the event page) ---------- */
+  .photo-band { position: relative; min-height: clamp(420px, 70vh, 720px); display: flex; align-items: flex-end; overflow: hidden; border-top: 1px solid var(--line); }
+  .photo-band-img { position: absolute; inset: -8% 0; width: 100%; height: 116%; object-fit: cover; will-change: transform; }
+  .photo-band-shade { position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(21,12,5,0.78) 0%, rgba(21,12,5,0.4) 32%, rgba(21,12,5,0) 55%),
+    linear-gradient(0deg, rgba(21,12,5,0.92) 0%, rgba(21,12,5,0.35) 45%, rgba(21,12,5,0.55) 100%); }
+  .photo-band-inner { position: relative; z-index: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px clamp(48px, 8vw, 96px); }
+  .photo-band blockquote p { font-family: 'dharma-gothic-e', sans-serif; font-weight: 600; font-size: clamp(38px, 5vw, 76px); line-height: 0.98; letter-spacing: 0.02em; max-width: 12ch; text-transform: uppercase; color: var(--ivory); text-wrap: balance; text-shadow: 0 2px 24px rgba(21,12,5,0.6); }
+  .photo-band blockquote cite { display: block; margin-top: 18px; font-style: normal; }
+  .photo-band + section { border-top: 0; }
