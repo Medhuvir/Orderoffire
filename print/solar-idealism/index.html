@@ -127,14 +127,17 @@
   }
   h2 { font-size: 30pt; margin-bottom: 0.14in; }
   h3 { font-size: 15pt; letter-spacing: 0.03em; }
+  .nw { white-space: nowrap; }
+  h2, h3 { text-wrap: balance; }
+  blockquote, li, figcaption { text-wrap: pretty; }
 
   p {
     font-size: 8.9pt;
     line-height: 1.5;
     font-weight: 400;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphenate-limit-chars: 8 4 4;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    text-wrap: pretty;
     hanging-punctuation: first;
     orphans: 2; widows: 2;
   }
@@ -185,7 +188,7 @@
     letter-spacing: 0.02em;
     margin: -0.42in 0 0.02in;
   }
-  .p-ritual .agni-gloss { font-style: italic; font-weight: 300; font-size: 8pt; color: var(--thunder); margin-bottom: 0.18in; }
+  .p-ritual .agni-gloss { font-style: italic; font-weight: 300; font-size: 8pt; color: var(--thunder); margin-top: 10px; margin-bottom: 0.18in; }
   .p-ritual h3 { margin-bottom: 0.1in; }
   .sun-track { display: block; width: 100%; height: auto; margin-top: 0.18in; color: var(--aquila); overflow: visible; }
 
@@ -217,6 +220,7 @@
     position: relative;
   }
   .visit::before { content: ''; position: absolute; inset: 0.035in; border: 0.5pt solid rgba(192,138,60,0.55); pointer-events: none; }
+  .visit .label { text-wrap: balance; }
   .visit .qr { width: 0.92in; height: 0.92in; flex: none; }
   .visit .url { font-family: 'dharma-gothic-e', 'Oswald', sans-serif; font-weight: 600; font-size: 17pt; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; margin-top: 0.05in; }
   .colophon { display: flex; align-items: center; gap: 0.1in; margin-top: 0.2in; }
@@ -247,7 +251,7 @@
   .p-cover .sub {
     margin-top: 0.22in;
     font-weight: 300; font-style: italic;
-    font-size: 10pt; line-height: 1.35;
+    font-size: 10pt; line-height: 1.35; white-space: nowrap;
     color: rgba(253,245,230,0.85);
   }
   .p-cover .sub b { font-style: normal; font-weight: 600; letter-spacing: 0.02em; }
@@ -292,7 +296,7 @@
   .p-three .bg { background: var(--parch); }
   html.stock .p-three .bg { background: transparent; }
   .p-three h2 { font-size: 27pt; }
-  .p-three h2 em { font-style: normal; color: var(--aquila); }
+  .p-three h2 em { display: block; font-style: normal; color: var(--aquila); }
   .arche { display: flex; gap: 0.13in; align-items: flex-start; padding: 0.105in 0; border-top: 0.5pt solid rgba(74,47,27,0.3); }
   .arche:last-of-type { border-bottom: 0.5pt solid rgba(74,47,27,0.3); }
   .arche img { width: 0.56in; height: 0.56in; flex: none; margin-top: 0.02in; }
@@ -416,8 +420,8 @@
       <div class="agni-gloss">The name given to the fire,<br>as men did more than 3,000 years ago.</div>
       <div class="kicker"><span class="num">IV</span><span class="rule"></span><span class="label">The Rite</span></div>
       <h3>What do Solar Idealists do?</h3>
-      <p>Solar Idealism revolves around <b>the Fire Ritual</b>, a rite that brings us together and perennially re-orients us toward our highest ideals.</p>
-      <p>Solar Idealists — <b>the First Men</b> — build a fire at dusk as a small, man-made sun to ward off the dusk. They set the fire in mythic time and name the fire “Agni,” as men did more than 3,000 years ago. We maintain the fire through the night, and only allow it to extinguish when the true Sun returns.</p>
+      <p>Solar Idealism revolves around <b>the Fire Ritual</b>, a rite that brings us together and perennially <span class="nw">re-orients</span> us toward our highest ideals.</p>
+      <p>Solar Idealists — <b>the First Men</b> — build a fire at dusk as a small, <span class="nw">man-made</span> sun to ward off the dusk. They set the fire in mythic time and name the fire “Agni,” as men did more than 3,000 years ago. We maintain the fire through the night, and only allow it to extinguish when the true Sun returns.</p>
       <div class="spacer"></div>
       <svg class="sun-track" viewBox="0 -2 240 66" aria-hidden="true" stroke="currentColor" fill="none">
           <line x1="0" y1="58" x2="240" y2="58" stroke-width="0.7"/>
@@ -484,7 +488,7 @@
         <line x1="82" y1="7" x2="140" y2="7" stroke="currentColor" stroke-width="0.6"/>
         <use href="#sun" x="63" y="0" width="14" height="14"/>
       </svg>
-      <p class="sub">Gods, Myth, and Religion<br>for Modern Men</p>
+      <p class="sub">Gods, Myth and Religion for Men</p>
       <div class="spacer"></div>
       <div class="label order">orderoffire.com</div>
     </article>
@@ -506,7 +510,7 @@
       <div class="bg"></div>
       <div class="kicker"><span class="num">I</span><span class="rule"></span><span class="label">The Idea</span></div>
       <h2>What is Solar Idealism?</h2>
-      <p class="lede">Most people understand that religion is a <b>human universal</b>. We need religion. But throughout all of history, we have also recognized that the gods are man-made.</p>
+      <p class="lede">Most people understand that religion is a <b>human universal</b>. We need religion. But throughout all of history, we have also recognized that the gods are <span class="nw">man-made</span>.</p>
 
       <div class="quote">
         <span class="mark">“</span>
@@ -514,7 +518,7 @@
         <cite class="label">Xenophanes · 5th century BC</cite>
       </div>
 
-      <p class="dropcap">Solar Idealism is a religion that embraces both the importance and the man-made nature of the divine — that we do not have to choose between these two truths.</p>
+      <p class="dropcap">Solar Idealism is a religion that embraces both the importance and the <span class="nw">man-made</span> nature of the divine — that we do not have to choose between these two truths.</p>
       <p>It begins with what has always been true: What have strong, healthy, aspirational men looked up to as divine, throughout all of time? And how can we describe the <b>holy positives</b> in a way that is suitably sacred?</p>
       <div class="spacer"></div>
       <div class="sunrule" style="margin-bottom:0"><svg aria-hidden="true"><use href="#sun"/></svg></div>
@@ -532,7 +536,7 @@
           <img src="../../images/archetypes/father-light.png" alt="Father glyph">
           <div>
             <h3>The Father</h3>
-            <p>It is <em>good</em> for men to be like the law-giving, order-making Father.</p>
+            <p>It is <em>good</em> for men to be like the <span class="nw">law-giving</span>, <span class="nw">order-making</span> Father.</p>
           </div>
         </div>
         <div class="arche">
@@ -563,7 +567,7 @@
       <svg class="solos" viewBox="0 0 71.79 72" role="img" aria-label="Solos glyph: the Sun"><path fill="currentColor" d="M71.79,35.89C71.79,15.9,55.44-.28,35.38,0,15.93.28.11,16.24,0,35.7c-.1,19.28,15,35.06,34.02,36.04.22.16.49.26.78.26h2.25c.3,0,.57-.1.79-.27,18.92-1.01,33.95-16.67,33.95-35.84ZM66.04,34h-26.59c-.59,0-1.07-.48-1.07-1.07V5.61c0-.46.41-.82.87-.77,14.69,1.57,26.36,13.37,27.75,28.11.05.56-.39,1.05-.95,1.05ZM33.48,5.71v26.97c0,.73-.59,1.31-1.31,1.31H5.74c-.56,0-.99-.48-.94-1.04,1.38-14.73,13.04-26.53,27.71-28.11.52-.06.97.34.97.86ZM5.84,38.89h26.36c.71,0,1.29.58,1.29,1.29v26.16c0,.38-.32.68-.7.64-14.43-1.43-26-12.73-27.86-27.04-.07-.55.36-1.05.92-1.05ZM38.37,65.97v-25.97c0-.62.5-1.12,1.12-1.12h26.38c.6,0,1.06.53.98,1.12-1.87,14.12-13.21,25.3-27.41,26.92-.57.06-1.07-.38-1.07-.95Z"/></svg>
       <div class="sun-body">
         <p>Since all beliefs (even the belief in the value of “truth”) are downstream from dispositions of the soul, Solar Idealism elevates <b>the Sun</b> as the energy and spirit that is right to guide men’s values.</p>
-        <p>The life-giving, bright, enduring image of the sun has captured the religious imagination of man since he could first speak, and fire — man’s sacred imitation of the power of the sun — was the first recorded hymn of praise and gratitude.</p>
+        <p>The <span class="nw">life-giving</span>, bright, enduring image of the sun has captured the religious imagination of man since he could first speak, and fire — man’s sacred imitation of the power of the sun — was the first recorded hymn of praise and gratitude.</p>
         <div class="hymn">Fire was the<br><span>first hymn.</span></div>
       </div>
       <figure class="photo"><img src="../../events/assets/ritual/sun-line.jpg" alt="Men standing in a line facing the setting sun"></figure>
