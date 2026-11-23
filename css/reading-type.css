@@ -1,0 +1,22 @@
+/*
+  Reading type, shared by every page built on the brand system.
+  Dharma Gothic E carries titles; Libre Baskerville carries reading text (the same
+  serif orderoffire.com uses); Work Sans stays for small tracked labels, nav and
+  buttons. Load after each page's own stylesheet, with Libre Baskerville from
+  Google Fonts (400, 700, 400 italic).
+*/
+:root { --read: 'Libre Baskerville', Georgia, serif; }
+
+/* Reading elements only: the page's base font stays Work Sans, so labels, nav and
+   buttons that inherit it keep their structural voice. */
+p, li, blockquote, figcaption, cite:not(.label),
+.section-sub, .sw-use, .mat-desc, .agni-gloss {
+  font-family: var(--read);
+}
+
+/* Baskerville's lowercase is taller than Work Sans'. Match the letter height instead of
+   changing each page's font sizes, so the print pamphlet's point sizes stay intact. */
+p, li, blockquote, figcaption, .section-sub, .sw-use, .mat-desc, .agni-gloss { font-size-adjust: 0.5; }
+
+/* labels nested inside reading text keep the structural voice */
+p .label, li .label, blockquote .label { font-family: 'Work Sans', sans-serif; font-size-adjust: none; }
