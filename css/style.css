@@ -85,6 +85,10 @@
     height: 75px;
     padding: 0 clamp(18px, 4vw, 32px);
     background: linear-gradient(180deg, rgba(21,12,5,0.55), rgba(21,12,5,0));
+    /* size the fade to the whole bar and never tile it: otherwise its dark top row
+       repeats into the transparent 1px bottom border as a hard line */
+    background-origin: border-box;
+    background-repeat: no-repeat;
     border-bottom: 1px solid transparent;
     box-shadow: none;
     --nav-ink: var(--ivory);
@@ -182,9 +186,13 @@
     overflow: hidden;
     padding: 0 clamp(18px, 4vw, 32px);
     background: linear-gradient(160deg, var(--ivory), #f2e6cf);
-    transition: max-height 0.35s var(--ease), padding 0.35s var(--ease);
+    /* hidden when closed: at zero height it still painted a 1px ivory sliver under the nav */
+    visibility: hidden;
+    transition: max-height 0.35s var(--ease), padding 0.35s var(--ease), visibility 0s 0.35s;
   }
   .nav-links.open {
+    visibility: visible;
+    transition-delay: 0s;
     display: flex;
     max-height: 70vh;
     overflow-y: auto;
@@ -381,10 +389,11 @@
       linear-gradient(0deg, rgba(21,12,5,0.92) 0%, rgba(21,12,5,0.4) 30%, rgba(21,12,5,0) 50%);
   }
   .hero.is-live > .hero-shade { opacity: 1; }
+  /* the hero photo is drawn inside the 3D scene (data-backdrop), behind the seal */
   .hero.is-live .doc-tag { color: var(--pebble); }
   /* the 3D mark takes the medallion's place; the flat one stays as the fallback */
   .hero .emblem-wrap svg { transition: opacity 1.2s var(--ease); }
-  .hero.is-live .emblem-wrap svg { opacity: 0; }
+  .hero.is-live .emblem-wrap svg { opacity: 0; visibility: hidden; transition: opacity 1.2s var(--ease), visibility 0s 1.2s; }
   .hero.is-live .emblem-wrap { filter: none; }
 
   /* ---------- SCROLL REVEALS (js/main.js adds .reveal, then .in) ---------- */

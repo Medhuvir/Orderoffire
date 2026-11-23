@@ -124,6 +124,7 @@ function particleMaterial({ ash, pixelRatio }) {
       uWarm: { value: new THREE.Color(PALETTE.orange) },
       uGold: { value: new THREE.Color(PALETTE.gilded) },
       uAsh: { value: new THREE.Color(PALETTE.thunder) },
+      uSoft: { value: 0 }, // 1 = fire-off mode: soft warm sparks that blend over a transparent canvas
     },
     vertexShader: /* glsl */`
       uniform float uTime, uSize, uPixelRatio, uSpeed;
@@ -179,15 +180,18 @@ function particleMaterial({ ash, pixelRatio }) {
       }
     ` : /* glsl */`
       uniform vec3 uHot, uWarm, uGold;
-      uniform float uIntensity;
+      uniform float uIntensity, uSoft;
       varying float vLife, vHeat, vSeed;
       void main(){
         vec2 c = gl_PointCoord - 0.5;
         float d = length(c);
         float core = smoothstep(0.5, 0.0, d);
         core *= core;
-        vec3 col = mix(mix(uWarm, uGold, vSeed), uHot, vHeat * 0.7) * (1.4 + vHeat * 2.2);
-        gl_FragColor = vec4(col * core * vLife * uIntensity, 1.0);
+        // without bloom, keep sparks ember-coloured instead of blowing out to white
+        float heat = vHeat * mix(0.7, 0.25, uSoft);
+        vec3 col = mix(mix(uWarm, uGold, vSeed), uHot, heat) * mix(1.4 + vHeat * 2.2, 1.1 + vHeat * 0.6, uSoft);
+        float a = core * vLife * uIntensity;
+        gl_FragColor = vec4(col * a, mix(1.0, clamp(a * 1.4, 0.0, 1.0), uSoft));
       }
     `,
     transparent: true,
@@ -315,9 +319,13 @@ export async function initHero(host) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const small = window.matchMedia('(max-width: 720px)').matches;
 
+  // data-fire="off": no generated fire, ash or heat haze; the canvas is transparent so the
+  // page's own hero background shows through, and only the glyph and sparks move
+  const noFire = host.dataset.fire === 'off';
+
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: noFire, powerPreference: 'high-performance' });
   } catch (e) {
     host.classList.add('no-webgl');
     return;
@@ -328,7 +336,8 @@ export async function initHero(host) {
   renderer.toneMappingExposure = 0.9;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(PALETTE.void);
+  if (noFire) renderer.setClearColor(0x000000, 0);
+  else scene.background = new THREE.Color(PALETTE.void);
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
   camera.position.set(0, 0, 10);
 
@@ -344,10 +353,73 @@ export async function initHero(host) {
   fireFront.position.z = 2.2;
   fireFront.renderOrder = 10;
   scene.add(fireFront);
+  fireBack.visible = fireFront.visible = !noFire;
 
-  const ash = makeParticles(small ? 140 : 280, true, pixelRatio);
-  const sparks = makeParticles(small ? 380 : 800, false, pixelRatio);
-  scene.add(ash, sparks);
+  // data-backdrop: a photo screened over the back fire but behind the glyph, so the
+  // glyph stays fully opaque (data-backdrop-opacity sets its strength)
+  let backdrop = null;
+  if (host.dataset.backdrop) {
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTex: { value: null },
+        uOpacity: { value: parseFloat(host.dataset.backdropOpacity || '0.3') },
+        uCrop: { value: new THREE.Vector2(1, 1) },
+        uFade: { value: 0 },
+      },
+      vertexShader: FULLSCREEN_VERT,
+      fragmentShader: /* glsl */`
+        uniform sampler2D uTex;
+        uniform float uOpacity, uFade;
+        uniform vec2 uCrop;
+        varying vec2 vUv;
+        void main(){
+          vec2 uv = 0.5 + (vUv - 0.5) * uCrop; // cover-fit
+          vec3 c = texture2D(uTex, uv).rgb;
+          gl_FragColor = vec4(c * uOpacity * uFade, 1.0);
+        }
+      `,
+      depthTest: true, // drawn after the glyph (transparent pass), so depth keeps it behind
+      depthWrite: false,
+      transparent: true,
+      // screen blend: result = src + dst * (1 - src)
+      blending: THREE.CustomBlending,
+      blendEquation: THREE.AddEquation,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcColorFactor,
+    });
+    backdrop = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
+    backdrop.position.z = -2;
+    backdrop.renderOrder = -5;
+    backdrop.visible = false;
+    scene.add(backdrop);
+    new THREE.TextureLoader().load(host.dataset.backdrop, tex => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      mat.uniforms.uTex.value = tex;
+      backdrop.userData.aspect = tex.image.width / tex.image.height;
+      backdrop.visible = true;
+      resize();
+    });
+  }
+
+  // data-sparks scales how many sparks and ash flakes there are (1 = the event page)
+  const sparkScale = parseFloat(host.dataset.sparks || '1');
+  // data-calm slows and softens the fire, heat haze and flicker (1 = the event page)
+  const calm = parseFloat(host.dataset.calm || '1');
+  const fireLevel = 0.5 + 0.5 * calm;
+  const ash = makeParticles(Math.round((small ? 140 : 280) * sparkScale), true, pixelRatio);
+  const sparks = makeParticles(Math.round((small ? 380 : 800) * sparkScale), false, pixelRatio);
+  scene.add(sparks);
+  if (!noFire) scene.add(ash);
+  if (noFire) {
+    // premultiplied additive colour, with real alpha so the sparks fade softly over the page
+    const m = sparks.material;
+    m.uniforms.uSoft.value = 1;
+    m.uniforms.uSize.value = small ? 13 : 22;
+    m.blending = THREE.CustomBlending;
+    m.blendEquation = THREE.AddEquation;
+    m.blendSrc = THREE.OneFactor; m.blendDst = THREE.OneFactor;
+    m.blendSrcAlpha = THREE.OneFactor; m.blendDstAlpha = THREE.OneMinusSrcAlphaFactor;
+  }
 
   // firelight
   const fireLight = new THREE.PointLight(new THREE.Color(PALETTE.orange), 30, 14, 1.6);
@@ -381,9 +453,10 @@ export async function initHero(host) {
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   const heat = new ShaderPass(HeatHazeShader);
-  composer.addPass(heat);
+  if (!noFire) composer.addPass(heat);
   const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.45, 0.85);
-  composer.addPass(bloom);
+  // bloom does not keep transparency, so the fire-off mode skips it
+  if (!noFire) composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
   // layout
@@ -405,6 +478,12 @@ export async function initHero(host) {
     fireBack.scale.set(bw * 1.04, bh * 1.04, 1);
     const [fw, fh] = fit(fireFront.position.z);
     fireFront.scale.set(fw * 1.04, fh * 1.04, 1);
+    if (backdrop) {
+      const [dw, dh] = fit(backdrop.position.z);
+      backdrop.scale.set(dw * 1.04, dh * 1.04, 1);
+      const pa = dw / dh, ia = backdrop.userData.aspect || pa;
+      backdrop.material.uniforms.uCrop.value.set(pa > ia ? 1 : pa / ia, pa > ia ? ia / pa : 1);
+    }
     [viewW, viewH] = fit(0);
     // data-glyph-anchor: centre the glyph on that element and match its width
     const anchor = host.dataset.glyphAnchor && host.querySelector(host.dataset.glyphAnchor);
@@ -468,17 +547,18 @@ export async function initHero(host) {
 
     const fade = 1 - scrollK * 0.65;
     for (const m of [fireBack, fireFront]) {
-      m.material.uniforms.uTime.value = t;
-      m.material.uniforms.uIntensity.value = intro * fade;
+      m.material.uniforms.uTime.value = t * calm;
+      m.material.uniforms.uIntensity.value = intro * fade * fireLevel;
     }
+    if (backdrop) backdrop.material.uniforms.uFade.value = intro * fade;
     for (const p of [sparks, ash]) {
       const u = p.material.uniforms;
       u.uTime.value = t + 40; // pre-warm so particles are already in flight
       u.uIntensity.value = intro * fade;
       u.uMouse.value.set(mouse.x * viewW / 2, mouse.y * viewH / 2, mouse.active);
     }
-    heat.uniforms.uTime.value = t;
-    heat.uniforms.uStrength.value = 0.6 + 0.4 * intro;
+    heat.uniforms.uTime.value = t * calm;
+    heat.uniforms.uStrength.value = (0.6 + 0.4 * intro) * calm;
     heat.uniforms.uMouse.value.set(mouse.u, mouse.v);
     heat.uniforms.uMouseAmt.value = mouse.active;
 
@@ -494,7 +574,7 @@ export async function initHero(host) {
       (1 - intro) * -2
     );
 
-    const flicker = 0.75 + 0.25 * Math.sin(t * 11.0) * Math.sin(t * 7.3 + 1.2) + 0.1 * Math.sin(t * 23.0);
+    const flicker = 0.75 + calm * (0.25 * Math.sin(t * 11.0) * Math.sin(t * 7.3 + 1.2) + 0.1 * Math.sin(t * 23.0));
     fireLight.intensity = 30 * flicker * intro * fade;
     fireLight.position.x = glyphX + Math.sin(t * 1.7) * 0.4;
     for (const m of glyphMats) m.emissiveIntensity = (0.03 + 0.07 * flicker) * intro;
