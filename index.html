@@ -23,6 +23,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://use.typekit.net/nat2szh.css">
 <link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -64,7 +72,9 @@
   </div>
 </nav>
 
-<header class="hero" id="overview">
+<header class="hero" id="overview" data-oof-hero data-glyph-src="images/order-of-fire-mark-gilded.svg" data-glyph-anchor=".emblem-wrap" data-glyph-fill="0.95">
+  <canvas class="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-shade" aria-hidden="true"></div>
   <div class="emblem-wrap"><svg viewBox="0 0 200 200" width="100%"><use href="#emblem-medallion"/></svg></div>
   <h1 class="hero-title">THE ORDER OF FIRE</h1>
   <div class="sub">Brand &amp; Design System</div>
@@ -528,11 +538,17 @@
   </div>
 </section>
 
-<footer style="padding:80px 24px 60px; text-align:center;">
-  <svg viewBox="0 0 200 200" width="52" style="margin-bottom:20px; opacity:0.85;"><use href="#emblem-medallion"/></svg>
-  <div class="label" style="color:var(--thunder);">Iove Fulgente</div>
+<footer class="topo-footer">
+  <canvas class="topo-canvas" data-topo-motion data-topo-crosses="false" aria-hidden="true"></canvas>
+  <div class="topo-shade" aria-hidden="true"></div>
+  <div class="topo-footer-inner">
+    <svg viewBox="0 0 200 200" width="64" aria-hidden="true"><use href="#emblem-medallion"/></svg>
+    <div class="label">Iove Fulgente</div>
+  </div>
 </footer>
 
 <script src="js/main.js"></script>
+<script src="events/topo-motion.js"></script>
+<script type="module" src="events/hero.js"></script>
 </body>
 </html>

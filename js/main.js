@@ -33,3 +33,42 @@ if (navToggle && navLinks) {
     navToggle.setAttribute('aria-expanded', 'false');
   }));
 }
+
+// staggered scroll reveals, with the event page's brand easing.
+// Each section's blocks rise into view; rows and grids reveal their items one by one.
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  // once an item has risen, drop the reveal styles so its own hover transitions apply again
+  const settle = e => {
+    if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
+    const el = e.currentTarget;
+    el.classList.remove('reveal', 'in');
+    el.style.removeProperty('--d');
+    el.removeEventListener('transitionend', settle);
+  };
+
+  const reveal = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      // reveal on entry, and also anything already scrolled past (e.g. after a nav jump)
+      if (e.isIntersecting || e.boundingClientRect.top < 0) {
+        e.target.addEventListener('transitionend', settle);
+        e.target.classList.add('in');
+        reveal.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+
+  const mark = (el, i) => {
+    el.classList.add('reveal');
+    el.style.setProperty('--d', `${Math.min(i, 8) * 70}ms`);
+    reveal.observe(el);
+  };
+
+  document.querySelectorAll('section[id]').forEach(section => {
+    [...section.children].forEach(block => {
+      const d = getComputedStyle(block).display;
+      const isRow = block.children.length > 1 && !block.classList.contains('kicker') && /grid|flex/.test(d);
+      if (isRow) [...block.children].forEach(mark);
+      else mark(block, 0);
+    });
+  });
+}

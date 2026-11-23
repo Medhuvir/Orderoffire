@@ -16,6 +16,13 @@
     --void: #150c05;
     --void-2: #241408;
     --line: rgba(227,187,99,0.18);
+    /* brand easing, shared with the event landing page */
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    /* events/topo-motion.js reads these: recolour the topo lines into Order of Fire metals */
+    --blaze-orange: #C08A3C;
+    --orange-light: #E3BB63;
+    --orange-dark: #8A5F33;
+    --warm-white: #FDF5E6;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -105,7 +112,7 @@
     color: rgba(74,47,27,0.65);
     position: relative;
     padding-bottom: 4px;
-    transition: color 0.3s ease;
+    transition: color 0.3s var(--ease);
   }
   nav a::after {
     content: '';
@@ -114,7 +121,7 @@
     width: 0%;
     height: 1px;
     background: var(--orange);
-    transition: width 0.3s ease;
+    transition: width 0.3s var(--ease);
   }
   nav a.active, nav a:hover { color: var(--earth); }
   nav a.active::after, nav a:hover::after { width: 100%; }
@@ -140,7 +147,7 @@
     width: 100%;
     height: 3px;
     background: var(--earth);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
   }
   .nav-toggle.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
@@ -158,7 +165,7 @@
     overflow: hidden;
     padding: 0 clamp(18px, 4vw, 32px);
     background: linear-gradient(160deg, var(--ivory), #f2e6cf);
-    transition: max-height 0.35s ease, padding 0.35s ease;
+    transition: max-height 0.35s var(--ease), padding 0.35s var(--ease);
   }
   .nav-links.open {
     display: flex;
@@ -176,7 +183,7 @@
   .kicker .num { font-family:'Work Sans', sans-serif; font-weight:600; font-size: 13px; color: var(--bronze); letter-spacing: 0.1em; }
   .kicker .rule { flex:1; height:1px; background: linear-gradient(90deg, var(--line), transparent); }
 
-  .section-title { font-size: clamp(30px, 4vw, 46px); margin-bottom: 10px; }
+  .section-title { font-size: clamp(44px, 7vw, 104px); line-height: 0.92; text-transform: uppercase; letter-spacing: 0.015em; margin-bottom: 18px; text-wrap: balance; }
   .section-sub { font-family:'Work Sans', sans-serif; font-style: italic; font-weight:300; color: var(--concrete); font-size: 20px; max-width: 640px; margin-bottom: 60px; }
 
   /* ---------- HERO ---------- */
@@ -206,8 +213,8 @@
     z-index: 0;
   }
   .hero > * { position: relative; z-index: 1; }
-  .hero .emblem-wrap { width: min(280px, 46vw); margin-bottom: 40px; filter: drop-shadow(0 20px 60px rgba(224,110,4,0.25)); animation: rise 1.4s ease both; }
-  .hero .eyebrow { animation: rise 1.4s ease 0.15s both; margin-bottom: 22px; }
+  .hero .emblem-wrap { width: min(280px, 46vw); margin-bottom: 40px; filter: drop-shadow(0 20px 60px rgba(224,110,4,0.25)); animation: rise 1.4s var(--ease) both; }
+  .hero .eyebrow { animation: rise 1.4s var(--ease) 0.15s both; margin-bottom: 22px; }
   .hero h1 {
     font-family: 'dharma-gothic-e', sans-serif;
     font-weight: 700;
@@ -220,7 +227,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: rise 1.4s ease 0.25s both;
+    animation: rise 1.4s var(--ease) 0.25s both;
   }
   .hero .sub {
     font-family: 'Work Sans', sans-serif;
@@ -230,7 +237,7 @@
     font-size: clamp(12px, 1.6vw, 15px);
     color: var(--pebble);
     margin-top: 22px;
-    animation: rise 1.4s ease 0.35s both;
+    animation: rise 1.4s var(--ease) 0.35s both;
   }
   .hero .doc-tag {
     margin-top: 60px;
@@ -240,7 +247,7 @@
     letter-spacing: 0.25em;
     color: var(--thunder);
     text-transform: uppercase;
-    animation: rise 1.4s ease 0.45s both;
+    animation: rise 1.4s var(--ease) 0.45s both;
   }
   @keyframes rise { from { opacity:0; transform: translateY(24px);} to { opacity:1; transform: translateY(0);} }
 
@@ -249,7 +256,7 @@
 
   /* ---------- SWATCHES ---------- */
   .swatch-row { display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; }
-  .swatch { aspect-ratio: 1.3/1; border-radius:4px; display:flex; align-items:flex-end; position:relative; overflow:hidden; transition: transform 0.35s ease; }
+  .swatch { aspect-ratio: 1.3/1; border-radius:4px; display:flex; align-items:flex-end; position:relative; overflow:hidden; transition: transform 0.35s var(--ease); }
   .swatch:hover { transform: translateY(-4px); }
   .sw-inner { display:flex; flex-direction:column; gap:2px; padding:16px 18px; width:100%; background:linear-gradient(0deg, rgba(21,12,5,0.55), transparent 75%); }
   .sw-inner.dark { background:linear-gradient(0deg, rgba(21,12,5,0.28), transparent 75%); }
@@ -283,7 +290,7 @@
 
   /* ---------- ARCHETYPE CARDS ---------- */
   .arche-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:30px; }
-  .arche-card { border:1px solid var(--line); border-radius:4px; padding:30px 26px 34px; background:var(--void-2); transition: transform 0.35s ease, border-color 0.35s ease; min-width:0; }
+  .arche-card { border:1px solid var(--line); border-radius:4px; padding:30px 26px 34px; background:var(--void-2); transition: transform 0.35s var(--ease), border-color 0.35s var(--ease); min-width:0; }
   .arche-card:hover { transform: translateY(-6px); border-color: var(--bronze); }
   .arche-glyphs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; min-width:0; }
   .arche-swatch { border-radius:4px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:22px; min-width:0; overflow:hidden; }
@@ -306,7 +313,7 @@
 
   /* ---------- CANONIZED GLYPHS ---------- */
   .glyph-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:26px; }
-  .glyph-card { border:1px solid var(--line); border-radius:4px; padding:32px 28px; background:var(--void-2); transition: transform 0.35s ease, border-color 0.35s ease; }
+  .glyph-card { border:1px solid var(--line); border-radius:4px; padding:32px 28px; background:var(--void-2); transition: transform 0.35s var(--ease), border-color 0.35s var(--ease); }
   .glyph-card:hover { transform: translateY(-6px); border-color: var(--bronze); }
   .glyph-icon { width:64px; height:64px; margin-bottom:22px; display:flex; align-items:center; justify-content:center; }
   .glyph-icon img { width:100%; height:100%; object-fit:contain; }
@@ -319,7 +326,7 @@
   }
 
   /* ---------- APPLICATION CARDS ---------- */
-  .app-card { border:1px solid var(--line); border-radius:4px; overflow:hidden; background:var(--void-2); transition: transform 0.35s ease, border-color 0.35s ease; }
+  .app-card { border:1px solid var(--line); border-radius:4px; overflow:hidden; background:var(--void-2); transition: transform 0.35s var(--ease), border-color 0.35s var(--ease); }
   .app-card:hover { transform: translateY(-6px); border-color: var(--bronze); }
   .app-caption { padding:20px 24px 26px; }
   .app-caption .label { display:block; margin-bottom:8px; }
@@ -330,7 +337,7 @@
   .artifact-card { display: block; text-decoration: none; color: inherit; }
   .artifact-card:focus-visible { outline: 1px solid var(--gilded); outline-offset: 4px; }
   .artifact-thumb { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--void); border-bottom: 1px solid var(--line); }
-  .artifact-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+  .artifact-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s var(--ease); }
   .artifact-thumb--print { background: #2a2520; padding: 22px 26px; }
   .artifact-thumb--print img { object-fit: contain; box-shadow: 0 10px 28px rgba(0,0,0,0.45); }
   .artifact-card:hover .artifact-thumb img { transform: scale(1.03); }
@@ -344,5 +351,43 @@
     display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
     font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange);
   }
-  .artifact-open::after { content: '\2192'; letter-spacing: 0; transition: transform 0.3s ease; }
+  .artifact-open::after { content: '\2192'; letter-spacing: 0; transition: transform 0.3s var(--ease); }
   .artifact-card:hover .artifact-open::after { transform: translateX(4px); }
+
+  /* ---------- LIVE HERO (shared with the event page's events/hero.js) ---------- */
+  .hero > .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; opacity: 0; transition: opacity 1.6s var(--ease); }
+  .hero.is-live > .hero-canvas { opacity: 1; }
+  .hero > .hero-shade { /* keeps the title legible over the flame */
+    position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s var(--ease);
+    background:
+      radial-gradient(ellipse 80% 34% at 50% 72%, rgba(21,12,5,0.82), rgba(21,12,5,0) 72%),
+      linear-gradient(0deg, rgba(21,12,5,0.92) 0%, rgba(21,12,5,0.4) 30%, rgba(21,12,5,0) 50%);
+  }
+  .hero.is-live > .hero-shade { opacity: 1; }
+  .hero.is-live .doc-tag { color: var(--pebble); }
+  /* the 3D mark takes the medallion's place; the flat one stays as the fallback */
+  .hero .emblem-wrap svg { transition: opacity 1.2s var(--ease); }
+  .hero.is-live .emblem-wrap svg { opacity: 0; }
+  .hero.is-live .emblem-wrap { filter: none; }
+
+  /* ---------- SCROLL REVEALS (js/main.js adds .reveal, then .in) ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); } /* hidden instantly; only the rise animates */
+  .reveal.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.9s var(--ease) var(--d, 0ms), transform 1.1s var(--ease) var(--d, 0ms);
+  }
+  .kicker.reveal .rule { transform: scaleX(0); transform-origin: left; }
+  .kicker.reveal.in .rule { transform: scaleX(1); transition: transform 0.9s var(--ease) 0.15s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero .emblem-wrap, .hero .eyebrow, .hero h1, .hero .sub, .hero .doc-tag, .scroll-cue { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ---------- TOPO FOOTER (shared with the event page's closing section) ---------- */
+  .topo-footer { position: relative; overflow: hidden; text-align: center; padding: clamp(110px, 16vw, 200px) 24px; border-top: 1px solid var(--line); }
+  .topo-footer .topo-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+  .topo-footer .topo-shade { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at center, rgba(21,12,5,0.9) 0%, rgba(21,12,5,0.55) 45%, rgba(21,12,5,0.12) 100%); }
+  .topo-footer-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .topo-footer-inner svg { opacity: 0.9; filter: drop-shadow(0 10px 30px rgba(224,110,4,0.2)); }
+  .topo-footer .label { color: var(--pebble); }

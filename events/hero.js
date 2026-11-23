@@ -369,9 +369,10 @@ export async function initHero(host) {
     glyphMats = mats;
   } catch (e) {
     if (host.dataset.model) console.warn('Model failed, using SVG glyph', e);
-    if (!host.dataset.glyph) { host.classList.add('no-webgl'); }
+    if (!host.dataset.glyph && !host.dataset.glyphSrc) { host.classList.add('no-webgl'); }
     else try {
-      const { mesh, mat } = await buildGlyph(glyphBase + encodeURIComponent(glyphFile) + '.svg');
+      const src = host.dataset.glyphSrc || glyphBase + encodeURIComponent(glyphFile) + '.svg';
+      const { mesh, mat } = await buildGlyph(src);
       glyphGroup.add(mesh);
       glyphMats = [mat];
     } catch (e2) { console.warn(e2); }
@@ -405,12 +406,23 @@ export async function initHero(host) {
     const [fw, fh] = fit(fireFront.position.z);
     fireFront.scale.set(fw * 1.04, fh * 1.04, 1);
     [viewW, viewH] = fit(0);
-    // desktop: glyph sits right of the headline; mobile: glyph rides high, centered
-    const wide = aspect > 1.15;
-    glyphX = wide ? viewW * 0.2 : 0;
-    glyphY = wide ? viewH * 0.04 : viewH * 0.17;
-    const sc = wide ? 1 : Math.min(1, viewW / 4.4);
-    glyphGroup.scale.setScalar(sc);
+    // data-glyph-anchor: centre the glyph on that element and match its width
+    const anchor = host.dataset.glyphAnchor && host.querySelector(host.dataset.glyphAnchor);
+    if (anchor) {
+      // offset* ignores the CSS entrance transform, so the glyph lands where the element settles
+      const cx = anchor.offsetLeft + anchor.offsetWidth / 2, cy = anchor.offsetTop + anchor.offsetHeight / 2;
+      glyphX = (cx / w - 0.5) * viewW;
+      glyphY = (0.5 - cy / h) * viewH;
+      const fill = parseFloat(host.dataset.glyphFill || '1'); // share of the anchor width the glyph spans
+      glyphGroup.scale.setScalar((anchor.offsetWidth / w) * viewW * fill / 3.1);
+    } else {
+      // desktop: glyph sits right of the headline; mobile: glyph rides high, centered
+      const wide = aspect > 1.15;
+      glyphX = wide ? viewW * 0.2 : 0;
+      glyphY = wide ? viewH * 0.04 : viewH * 0.17;
+      const sc = wide ? 1 : Math.min(1, viewW / 4.4);
+      glyphGroup.scale.setScalar(sc);
+    }
     [fireBack, fireFront].forEach(m => m.material.uniforms.uAspect.value = aspect);
     heat.uniforms.uAspect.value = aspect;
     const gu = new THREE.Vector2(0.5 + glyphX / viewW, 0.5 + glyphY / viewH);
