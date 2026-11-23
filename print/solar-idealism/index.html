@@ -11,7 +11,10 @@
   Sheet 2 = INSIDE    [ D                     | E             | F: fold-in flap  ]
 
   The fold-in flap (A/F) is 1/16" narrower so it tucks without buckling.
-  Print duplex, landscape, "flip on short edge", 100% / actual size.
+  Print duplex, landscape, "flip on long edge" (the printer default), 100% / actual size.
+  The home-printer PDF prints sheet 2 rotated 180° so long-edge duplex comes out
+  right side up when the sheet is turned over side to side. The ?bleed PDF is
+  not rotated (print shops impose pages themselves).
 
   URL modes:
     ?bleed      → 11.25 × 8.75 in page with 0.125 in bleed (for a print shop)
@@ -368,6 +371,9 @@
   @media print {
     html { background: none; }
     .sheet-title, .print-note, .fold, .back-row { display: none !important; }
+    /* Long-edge duplex flips the sheet top-over-bottom; a tri-fold is turned
+       side to side, so the inside prints upside down to land upright. */
+    html:not(.bleed) .sheet[aria-label="Inside"] { transform: rotate(180deg); }
   }
 </style>
 <style id="pagesize"></style>
@@ -387,7 +393,7 @@
 </a></div>
 
 <div class="print-note">
-  <b>Solar Idealism · tri-fold.</b> US Letter, landscape, duplex. Print at <b>100% / actual size</b>, <b>flip on short edge</b>, backgrounds on.
+  <b>Solar Idealism · tri-fold.</b> US Letter, landscape, duplex. Print at <b>100% / actual size</b>, <b>flip on long edge</b> (the usual default), backgrounds on.
   Sheet one is the outside, sheet two the inside. Orange dashes are fold lines and do not print.
   Modes: <a href="?">home printer</a> · <a href="?bleed">print shop (0.125″ bleed)</a> · <a href="?stock">cream stock (no tint)</a><br>
   Download: <a href="solar-idealism-trifold.pdf" download>PDF · home printer</a> · <a href="solar-idealism-trifold-bleed.pdf" download>PDF · print shop</a>
