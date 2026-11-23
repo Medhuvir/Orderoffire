@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Idealism · Trifold</title>
+<!--
+  Solar Idealism — tri-fold (C-fold / letter fold), US Letter landscape, double-sided.
+
+  Sheet 1 = OUTSIDE   [ A: inside flap (back) | B: back cover | C: front cover ]
+  Sheet 2 = INSIDE    [ D                     | E             | F: fold-in flap  ]
+
+  The fold-in flap (A/F) is 1/16" narrower so it tucks without buckling.
+  Print duplex, landscape, "flip on short edge", 100% / actual size.
+
+  URL modes:
+    ?bleed      → 11.25 × 8.75 in page with 0.125 in bleed (for a print shop)
+    ?stock      → no parchment tint (when printing on cream / parchment paper)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/nat2szh.css">
+<link rel="stylesheet" href="../../css/system-back.css">
+<script>
+  // Mode flags must be set before first paint so @page size is right.
+  (function () {
+    var q = location.search;
+    var c = document.documentElement.classList;
+    if (/[?&]bleed\b/.test(q)) c.add('bleed');
+    if (/[?&]stock\b/.test(q)) c.add('stock');
+  })();
+</script>
+<style>
+  :root {
+    --aquila: #C08A3C;
+    --gilded: #E3BB63;
+    --bronze: #8A5F33;
+    --earth: #4A2F1B;
+    --ivory: #FDF5E6;
+    --parch: #F6EBD5;
+    --pebble: #A89F91;
+    --thunder: #6C645A;
+    --orange: #E06E04;
+    --void: #150c05;
+
+    --b: 0in;            /* bleed */
+    --wide: 3.6875in;    /* 3 11/16" */
+    --flap: 3.625in;     /* 3 5/8"  */
+    --pad-x: 0.34in;
+    --pad-top: 0.42in;
+    --pad-bot: 0.4in;
+  }
+  html.bleed { --b: 0.125in; }
+
+  @page { size: 11in 8.5in; margin: 0; }
+  html.bleed { }
+  @media print { html.bleed { } }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { background: #2a2520; }
+  body {
+    font-family: 'Work Sans', sans-serif;
+    color: var(--earth);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-kerning: normal;
+    font-variant-ligatures: common-ligatures;
+    text-rendering: geometricPrecision;
+  }
+
+  /* ---------- sheet & panels ---------- */
+  .sheet {
+    position: relative;
+    width: calc(11in + 2 * var(--b));
+    height: calc(8.5in + 2 * var(--b));
+    padding: var(--b);
+    overflow: hidden;
+    display: flex;
+    margin: 0 auto;
+    background: var(--parch);
+    break-after: page;
+    page-break-after: always;
+  }
+  .sheet:last-of-type { break-after: auto; page-break-after: auto; }
+  html.stock .sheet { background: #fff; }
+
+  .trim { display: flex; width: 11in; height: 8.5in; position: relative; }
+
+  .panel {
+    position: relative;
+    height: 100%;
+    flex: none;
+    width: var(--wide);
+    padding: var(--pad-top) var(--pad-x) var(--pad-bot);
+    display: flex;
+    flex-direction: column;
+  }
+  .panel.flap { width: var(--flap); }
+  /* bleed-aware background layer */
+  .panel > .bg { position: absolute; top: calc(-1 * var(--b)); bottom: calc(-1 * var(--b)); left: 0; right: 0; z-index: 0; }
+  .panel.edge-l > .bg { left: calc(-1 * var(--b)); }
+  .panel.edge-r > .bg { right: calc(-1 * var(--b)); }
+  .panel > *:not(.bg) { position: relative; z-index: 1; }
+
+  /* ---------- type ---------- */
+  .label {
+    font-weight: 600;
+    font-size: 6.6pt;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--bronze);
+  }
+  .kicker { display: flex; align-items: center; gap: 0.12in; margin-bottom: 0.14in; }
+  .kicker .num { font-family: 'dharma-gothic-e', 'Oswald', sans-serif; font-weight: 600; font-size: 13pt; color: var(--aquila); line-height: 1; letter-spacing: 0.04em; }
+  .kicker .rule { flex: 1; height: 0.5pt; background: rgba(74,47,27,0.35); }
+  .kicker .label { white-space: nowrap; }
+
+  h1, h2, h3 {
+    font-family: 'dharma-gothic-e', 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.015em;
+    line-height: 0.9;
+    color: var(--earth);
+    text-transform: uppercase;
+  }
+  h2 { font-size: 30pt; margin-bottom: 0.14in; }
+  h3 { font-size: 15pt; letter-spacing: 0.03em; }
+
+  p {
+    font-size: 8.9pt;
+    line-height: 1.5;
+    font-weight: 400;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphenate-limit-chars: 8 4 4;
+    hanging-punctuation: first;
+    orphans: 2; widows: 2;
+  }
+  p + p { margin-top: 0.09in; }
+  p b, p strong { font-weight: 600; }
+  p em { font-style: italic; }
+  .lede { font-size: 10pt; line-height: 1.45; font-weight: 400; }
+  .lede b { font-weight: 600; }
+  .dropcap::first-letter {
+    font-family: 'dharma-gothic-e', 'Oswald', sans-serif;
+    font-weight: 600;
+    float: left;
+    font-size: 40pt;
+    line-height: 0.82;
+    padding: 0.03in 0.06in 0 0;
+    color: var(--aquila);
+  }
+
+  /* solar divider: a line broken by a small sun */
+  .sunrule { display: flex; align-items: center; gap: 0.08in; margin: 0.16in 0; color: var(--aquila); }
+  .sunrule::before, .sunrule::after { content: ''; flex: 1; height: 0.5pt; background: currentColor; opacity: 0.7; }
+  .sunrule svg { width: 0.16in; height: 0.16in; flex: none; }
+
+  .spacer { flex: 1; }
+
+  /* ---------- A · the fire ritual (outside flap) ---------- */
+  .p-ritual { color: var(--earth); }
+  .p-ritual .bg { background: var(--parch); }
+  html.stock .p-ritual .bg { background: transparent; }
+  .p-ritual .photo {
+    margin: calc(-1 * (var(--pad-top) + var(--b))) calc(-1 * var(--pad-x)) 0 calc(-1 * (var(--pad-x) + var(--b)));
+    height: calc(3.55in + var(--b));
+    position: relative;
+    overflow: hidden;
+  }
+  .p-ritual .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 40%; display: block; }
+  .p-ritual .photo::after {
+    content: ''; position: absolute; inset: auto -2px -2px -2px; height: 0.95in;
+    background: linear-gradient(to bottom, rgba(246,235,213,0), var(--parch) 92%);
+  }
+  html.stock .p-ritual .photo::after { background: linear-gradient(to bottom, rgba(255,255,255,0), #fff 92%); }
+  .p-ritual .agni {
+    font-family: 'dharma-gothic-e', 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 54pt;
+    line-height: 0.8;
+    color: var(--orange);
+    letter-spacing: 0.02em;
+    margin: -0.42in 0 0.02in;
+  }
+  .p-ritual .agni-gloss { font-style: italic; font-weight: 300; font-size: 8pt; color: var(--thunder); margin-bottom: 0.18in; }
+  .p-ritual h3 { margin-bottom: 0.1in; }
+  .sun-track { display: block; width: 100%; height: auto; margin-top: 0.18in; color: var(--aquila); overflow: visible; }
+
+  /* ---------- B · back cover ---------- */
+  .p-back .bg { background: var(--parch); }
+  html.stock .p-back .bg { background: transparent; }
+  .p-back h2 { font-size: 26pt; }
+  .first-man {
+    font-family: 'dharma-gothic-e', 'Oswald', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 19pt;
+    line-height: 0.98;
+    letter-spacing: 0.015em;
+    color: var(--earth);
+    margin-top: 0.14in;
+  }
+  .first-man span { color: var(--orange); }
+  .canon { list-style: none; margin: 0.16in 0 0; border-top: 0.5pt solid rgba(74,47,27,0.3); }
+  .canon li {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0.055in 0; border-bottom: 0.5pt solid rgba(74,47,27,0.3);
+    font-size: 8.2pt; font-style: italic;
+  }
+  .canon li .label { font-style: normal; font-size: 5.8pt; color: var(--thunder); }
+  .visit {
+    display: flex; gap: 0.18in; align-items: center; justify-content: center;
+    padding: 0.14in; border: 0.75pt solid var(--aquila);
+    position: relative;
+  }
+  .visit::before { content: ''; position: absolute; inset: 0.035in; border: 0.5pt solid rgba(192,138,60,0.55); pointer-events: none; }
+  .visit .qr { width: 0.92in; height: 0.92in; flex: none; }
+  .visit .url { font-family: 'dharma-gothic-e', 'Oswald', sans-serif; font-weight: 600; font-size: 17pt; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; margin-top: 0.05in; }
+  .colophon { display: flex; align-items: center; gap: 0.1in; margin-top: 0.2in; }
+  .colophon img { width: 0.3in; height: 0.3in; }
+  .colophon .label { color: var(--earth); font-size: 6.2pt; }
+
+  /* ---------- C · front cover ---------- */
+  .p-cover { color: var(--ivory); align-items: center; text-align: center; }
+  .p-cover .bg {
+    background:
+      radial-gradient(ellipse 80% 45% at 50% 40%, rgba(192,138,60,0.22), rgba(192,138,60,0) 70%),
+      linear-gradient(180deg, #3e2716 0%, var(--earth) 35%, #2b1a0e 100%);
+  }
+  .p-cover .frame {
+    position: absolute; inset: 0.2in; border: 0.75pt solid rgba(227,187,99,0.7); z-index: 1; pointer-events: none;
+  }
+  .p-cover .frame::before { content: ''; position: absolute; inset: 0.045in; border: 0.5pt solid rgba(227,187,99,0.35); }
+  .p-cover .top-label { color: var(--gilded); margin-top: 0.18in; letter-spacing: 0.32em; font-size: 6.4pt; }
+  .p-cover .seal { width: 2.05in; height: 2.05in; margin: 0.62in auto 0.4in; }
+  .p-cover h1 {
+    color: var(--ivory);
+    font-size: 64pt;
+    line-height: 0.8;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+  }
+  .p-cover h1 span { display: block; color: var(--gilded); }
+  .p-cover .sub {
+    margin-top: 0.22in;
+    font-weight: 300; font-style: italic;
+    font-size: 10pt; line-height: 1.35;
+    color: rgba(253,245,230,0.85);
+  }
+  .p-cover .sub b { font-style: normal; font-weight: 600; letter-spacing: 0.02em; }
+  .p-cover .rays { width: 1.4in; height: 0.14in; color: var(--gilded); margin: 0.22in auto 0; opacity: 0.85; }
+  .p-cover .order { color: rgba(253,245,230,0.7); margin-bottom: 0.18in; font-size: 6.4pt; letter-spacing: 0.32em; }
+
+  /* ---------- D · what is solar idealism ---------- */
+  .p-what .bg { background: var(--parch); }
+  html.stock .p-what .bg { background: transparent; }
+  .quote {
+    margin: 0.2in 0 0.2in;
+    padding: 0.18in 0.04in 0.16in;
+    border-top: 0.5pt solid var(--aquila);
+    border-bottom: 0.5pt solid var(--aquila);
+    text-align: center;
+    position: relative;
+  }
+  .quote .mark {
+    font-family: 'dharma-gothic-e', 'Oswald', sans-serif; font-weight: 700;
+    font-size: 38pt; line-height: 0.6; color: var(--aquila); display: block; height: 0.2in;
+  }
+  .quote blockquote {
+    font-style: italic; font-weight: 400; font-size: 10.6pt; line-height: 1.38; color: var(--earth);
+  }
+  .quote cite { display: block; margin-top: 0.1in; font-style: normal; }
+
+  .p-what h2 { font-size: 34pt; margin-bottom: 0.18in; }
+  .p-what .lede { font-size: 11pt; }
+  .p-what p { font-size: 9.6pt; }
+  .p-what .quote { margin: 0.26in 0; padding: 0.22in 0.04in 0.2in; }
+  .p-what .quote blockquote { font-size: 12pt; }
+
+  /* back cover photo fills what the copy leaves */
+  .p-back .photo { flex: 1; min-height: 1.1in; margin: 0.2in 0 0.2in; overflow: hidden; position: relative; }
+  .p-back .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+  .p-back .photo figcaption {
+    position: absolute; left: 0.1in; bottom: 0.08in; z-index: 1;
+    font-weight: 600; font-size: 5.8pt; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ivory);
+  }
+
+  /* ---------- E · the three ---------- */
+  .p-three .bg { background: var(--parch); }
+  html.stock .p-three .bg { background: transparent; }
+  .p-three h2 { font-size: 27pt; }
+  .p-three h2 em { font-style: normal; color: var(--aquila); }
+  .arche { display: flex; gap: 0.13in; align-items: flex-start; padding: 0.105in 0; border-top: 0.5pt solid rgba(74,47,27,0.3); }
+  .arche:last-of-type { border-bottom: 0.5pt solid rgba(74,47,27,0.3); }
+  .arche img { width: 0.56in; height: 0.56in; flex: none; margin-top: 0.02in; }
+  .arche h3 { font-size: 14pt; margin-bottom: 0.03in; }
+  .arche .sac { font-size: 5.8pt; margin-bottom: 0.04in; }
+  .arche p { font-size: 8.2pt; line-height: 1.42; }
+  .arche p em { font-weight: 600; font-style: italic; }
+  .three-close { margin-top: 0.14in; font-style: italic; font-size: 8.6pt; color: var(--earth); }
+  .three-close em { font-weight: 600; }
+  .three-list { margin-top: 0.16in; }
+  .p-three .photo {
+    margin: 0.2in calc(-1 * var(--pad-x)) calc(-1 * (var(--pad-bot) + var(--b)));
+    height: calc(1.8in + var(--b)); position: relative; overflow: hidden; flex: none;
+  }
+  .p-three .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; display: block; }
+  .p-three .photo::before {
+    content: ''; position: absolute; inset: -2px -2px auto -2px; height: 0.45in; z-index: 1;
+    background: linear-gradient(to top, rgba(246,235,213,0), var(--parch));
+  }
+  html.stock .p-three .photo::before { background: linear-gradient(to top, rgba(255,255,255,0), #fff); }
+
+  /* ---------- F · the sun (fold-in flap) ---------- */
+  .p-sun { color: var(--ivory); }
+  .p-sun .bg { background: linear-gradient(180deg, var(--earth) 0%, #2b1a0e 100%); }
+  .p-sun .kicker .rule { background: rgba(227,187,99,0.45); }
+  .p-sun .kicker .label { color: var(--gilded); }
+  .p-sun .kicker .num { color: var(--gilded); }
+  .p-sun h2 { color: var(--ivory); font-size: 34pt; }
+  .p-sun h2 span { color: var(--gilded); }
+  .p-sun p { color: rgba(253,245,230,0.92); }
+  .p-sun p b { color: var(--gilded); font-weight: 600; }
+  .p-sun .solos { display: block; width: 1.2in; height: 1.2in; margin: 0.12in auto 0; color: var(--gilded); }
+  .p-sun .photo {
+    margin: 0 calc(-1 * (var(--pad-x) + var(--b))) calc(-1 * (var(--pad-bot) + var(--b))) calc(-1 * var(--pad-x));
+    height: calc(1.8in + var(--b)); position: relative; overflow: hidden;
+  }
+  .p-sun .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 18% 50%; display: block; }
+  .p-sun .photo::before {
+    content: ''; position: absolute; inset: 0 0 auto 0; height: 0.7in; z-index: 1;
+    background: linear-gradient(to bottom, var(--earth), rgba(74,47,27,0));
+  }
+  .p-sun .hymn {
+    font-family: 'dharma-gothic-e', 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+    font-size: 56pt; line-height: 0.86; letter-spacing: 0.01em; white-space: nowrap; color: var(--ivory);
+    margin-top: 0.22in;
+  }
+  .p-sun .hymn span { color: var(--orange); }
+  .p-sun .sun-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  /* ---------- screen preview chrome ---------- */
+  @media screen {
+    body { padding: 40px 20px 80px; }
+    .sheet { box-shadow: 0 18px 50px rgba(0,0,0,0.5); margin-bottom: 70px; }
+    .sheet-title {
+      max-width: calc(11in + 2 * var(--b)); margin: 0 auto 12px; color: #d9cbb2;
+      font: 600 11px/1.4 'Work Sans', sans-serif; letter-spacing: 0.2em; text-transform: uppercase;
+      display: flex; justify-content: space-between;
+    }
+    .sheet-title span:last-child { color: #8e8170; letter-spacing: 0.1em; text-transform: none; font-weight: 400; }
+    .trim .fold { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed rgba(224,110,4,0.55); z-index: 5; pointer-events: none; }
+    .print-note {
+      max-width: 11in; margin: 0 auto 36px; color: #cfc2ab; font: 400 13px/1.6 'Work Sans', sans-serif;
+    }
+    .print-note b { color: #f2e6cf; font-weight: 600; }
+    .print-note a { color: var(--gilded); }
+    html.nofolds .fold { display: none; }
+    .back-row { max-width: 11in; margin: 0 auto 22px; }
+  }
+  @media print {
+    html { background: none; }
+    .sheet-title, .print-note, .fold, .back-row { display: none !important; }
+  }
+</style>
+<style id="pagesize"></style>
+<script>
+  if (document.documentElement.classList.contains('bleed')) {
+    document.getElementById('pagesize').textContent = '@page { size: 11.25in 8.75in; margin: 0; }';
+  }
+</script>
+</head>
+<body>
+
+<div class="back-row"><a class="system-back system-back--inline" href="../../" aria-label="Back to the Brand System">
+  <img src="../../images/order-of-fire-mark-gilded.svg" alt="">
+  <span>Brand System</span>
+</a></div>
+
+<div class="print-note">
+  <b>Solar Idealism · tri-fold.</b> US Letter, landscape, duplex. Print at <b>100% / actual size</b>, <b>flip on short edge</b>, backgrounds on.
+  Sheet one is the outside, sheet two the inside. Orange dashes are fold lines and do not print.
+  Modes: <a href="?">home printer</a> · <a href="?bleed">print shop (0.125″ bleed)</a> · <a href="?stock">cream stock (no tint)</a><br>
+  Download: <a href="solar-idealism-trifold.pdf" download>PDF · home printer</a> · <a href="solar-idealism-trifold-bleed.pdf" download>PDF · print shop</a>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+        <line x1="12" y1="1.5" x2="12" y2="4.6"/><line x1="12" y1="19.4" x2="12" y2="22.5"/>
+        <line x1="1.5" y1="12" x2="4.6" y2="12"/><line x1="19.4" y1="12" x2="22.5" y2="12"/>
+        <line x1="4.6" y1="4.6" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.4" y2="19.4"/>
+        <line x1="4.6" y1="19.4" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.4" y2="4.6"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- =================================================================== -->
+<!--  SHEET 1 · OUTSIDE                                                  -->
+<!-- =================================================================== -->
+<div class="sheet-title"><span>Sheet 1 · Outside</span><span>Inside flap · Back cover · Front cover</span></div>
+<section class="sheet" aria-label="Outside">
+  <div class="trim">
+
+    <!-- A · fold-in flap, outer face: The Fire Ritual -->
+    <article class="panel flap edge-l p-ritual">
+      <div class="bg"></div>
+      <figure class="photo"><img src="../../events/assets/ritual/fire-column.jpg" alt="A man standing behind a column of fire at dusk"></figure>
+      <div class="agni">Agni</div>
+      <div class="agni-gloss">The name given to the fire,<br>as men did more than 3,000 years ago.</div>
+      <div class="kicker"><span class="num">IV</span><span class="rule"></span><span class="label">The Rite</span></div>
+      <h3>What do Solar Idealists do?</h3>
+      <p>Solar Idealism revolves around <b>the Fire Ritual</b>, a rite that brings us together and perennially re-orients us toward our highest ideals.</p>
+      <p>Solar Idealists — <b>the First Men</b> — build a fire at dusk as a small, man-made sun to ward off the dusk. They set the fire in mythic time and name the fire “Agni,” as men did more than 3,000 years ago. We maintain the fire through the night, and only allow it to extinguish when the true Sun returns.</p>
+      <div class="spacer"></div>
+      <svg class="sun-track" viewBox="0 -2 240 66" aria-hidden="true" stroke="currentColor" fill="none">
+          <line x1="0" y1="58" x2="240" y2="58" stroke-width="0.7"/>
+          <path d="M20 58 A100 40 0 0 1 220 58" fill="none" stroke-width="0.6" stroke-dasharray="1.6 2.6" opacity="0.8"/>
+          <path d="M14 58 A6 6 0 0 1 26 58" fill="none" stroke-width="0.8"/>
+          <g stroke-width="0.7" stroke-linecap="round"><line x1="27.99" y1="55.09" x2="31.28" y2="53.90"/><line x1="24.88" y1="51.04" x2="26.88" y2="48.17"/><line x1="20.00" y1="49.50" x2="20.00" y2="46.00"/><line x1="15.12" y1="51.04" x2="13.12" y2="48.17"/><line x1="12.01" y1="55.09" x2="8.72" y2="53.90"/></g>
+          <path d="M214 58 A6 6 0 0 1 226 58" fill="none" stroke-width="0.8"/>
+          <g stroke-width="0.7" stroke-linecap="round"><line x1="227.99" y1="55.09" x2="231.28" y2="53.90"/><line x1="224.88" y1="51.04" x2="226.88" y2="48.17"/><line x1="220.00" y1="49.50" x2="220.00" y2="46.00"/><line x1="215.12" y1="51.04" x2="213.12" y2="48.17"/><line x1="212.01" y1="55.09" x2="208.72" y2="53.90"/></g>
+          <circle cx="49.29" cy="29.72" r="4" fill="var(--parch)" stroke-width="0.8"/>
+          <g stroke-width="0.6" stroke-linecap="round"><line x1="55.29" y1="29.72" x2="57.79" y2="29.72"/><line x1="53.53" y1="25.47" x2="55.30" y2="23.71"/><line x1="49.29" y1="23.72" x2="49.29" y2="21.22"/><line x1="45.05" y1="25.47" x2="43.28" y2="23.71"/><line x1="43.29" y1="29.72" x2="40.79" y2="29.72"/><line x1="45.05" y1="33.96" x2="43.28" y2="35.73"/><line x1="49.29" y1="35.72" x2="49.29" y2="38.22"/><line x1="53.53" y1="33.96" x2="55.30" y2="35.73"/></g>
+          <circle cx="190.71" cy="29.72" r="4" fill="var(--parch)" stroke-width="0.8"/>
+          <g stroke-width="0.6" stroke-linecap="round"><line x1="196.71" y1="29.72" x2="199.21" y2="29.72"/><line x1="194.95" y1="25.47" x2="196.72" y2="23.71"/><line x1="190.71" y1="23.72" x2="190.71" y2="21.22"/><line x1="186.47" y1="25.47" x2="184.70" y2="23.71"/><line x1="184.71" y1="29.72" x2="182.21" y2="29.72"/><line x1="186.47" y1="33.96" x2="184.70" y2="35.73"/><line x1="190.71" y1="35.72" x2="190.71" y2="38.22"/><line x1="194.95" y1="33.96" x2="196.72" y2="35.73"/></g>
+          <g stroke="var(--orange)"><circle cx="120.0" cy="18.0" r="6" fill="var(--parch)" stroke-width="0.9"/><circle cx="120.0" cy="18.0" r="2.2" fill="var(--orange)" stroke="none"/><g stroke-width="0.8" stroke-linecap="round"><line x1="128.50" y1="18.00" x2="132.50" y2="18.00"/><line x1="127.36" y1="13.75" x2="130.83" y2="11.75"/><line x1="124.25" y1="10.64" x2="126.25" y2="7.17"/><line x1="120.00" y1="9.50" x2="120.00" y2="5.50"/><line x1="115.75" y1="10.64" x2="113.75" y2="7.17"/><line x1="112.64" y1="13.75" x2="109.17" y2="11.75"/><line x1="111.50" y1="18.00" x2="107.50" y2="18.00"/><line x1="112.64" y1="22.25" x2="109.17" y2="24.25"/><line x1="115.75" y1="25.36" x2="113.75" y2="28.83"/><line x1="120.00" y1="26.50" x2="120.00" y2="30.50"/><line x1="124.25" y1="25.36" x2="126.25" y2="28.83"/><line x1="127.36" y1="22.25" x2="130.83" y2="24.25"/></g></g>
+          <g stroke-width="0.5" opacity="0.45"><line x1="6" y1="61" x2="3" y2="64"/><line x1="15" y1="61" x2="12" y2="64"/><line x1="24" y1="61" x2="21" y2="64"/><line x1="33" y1="61" x2="30" y2="64"/><line x1="42" y1="61" x2="39" y2="64"/><line x1="51" y1="61" x2="48" y2="64"/><line x1="60" y1="61" x2="57" y2="64"/><line x1="69" y1="61" x2="66" y2="64"/><line x1="78" y1="61" x2="75" y2="64"/><line x1="87" y1="61" x2="84" y2="64"/><line x1="96" y1="61" x2="93" y2="64"/><line x1="105" y1="61" x2="102" y2="64"/><line x1="114" y1="61" x2="111" y2="64"/><line x1="123" y1="61" x2="120" y2="64"/><line x1="132" y1="61" x2="129" y2="64"/><line x1="141" y1="61" x2="138" y2="64"/><line x1="150" y1="61" x2="147" y2="64"/><line x1="159" y1="61" x2="156" y2="64"/><line x1="168" y1="61" x2="165" y2="64"/><line x1="177" y1="61" x2="174" y2="64"/><line x1="186" y1="61" x2="183" y2="64"/><line x1="195" y1="61" x2="192" y2="64"/><line x1="204" y1="61" x2="201" y2="64"/><line x1="213" y1="61" x2="210" y2="64"/><line x1="222" y1="61" x2="219" y2="64"/><line x1="231" y1="61" x2="228" y2="64"/></g>
+        </svg>
+    </article>
+
+    <!-- B · back cover: learn more -->
+    <article class="panel p-back">
+      <div class="bg"></div>
+      <div class="kicker"><span class="num">V</span><span class="rule"></span><span class="label">Go Further</span></div>
+      <h2>Where can I learn more?</h2>
+      <p>You don’t have to join the Order of Fire in order to become a Solar Idealist. Anyone can read the Rig Veda, Gilgamesh, and the Odyssey, pursue and venerate the archetypal gods, and even perform fire rituals on your own. Men have always worked in groups, and religion is no different...</p>
+      <div class="first-man">but someone always has to be the <span>“first man”</span> in his own area.</div>
+
+      <ul class="canon">
+        <li>The Rig Veda <span class="label">Hymns to Agni</span></li>
+        <li>Gilgamesh <span class="label">The first epic</span></li>
+        <li>The Odyssey <span class="label">The long return</span></li>
+      </ul>
+
+      <figure class="photo"><img src="../../events/assets/ritual/crossed-torches.jpg" alt="Two men crossing lit torches at dusk"></figure>
+
+      <div class="visit">
+        <img class="qr" src="qr-orderoffire.svg" alt="QR code linking to orderoffire.com">
+        <div>
+          <div class="label">If you are curious, visit</div>
+          <div class="url">orderoffire.com</div>
+        </div>
+      </div>
+      <div class="colophon">
+        <img src="../../images/order-of-fire-mark-earth.svg" alt="">
+        <span class="label">The Order of Fire</span>
+      </div>
+    </article>
+
+    <!-- C · front cover -->
+    <article class="panel edge-r p-cover">
+      <div class="bg"></div>
+      <div class="frame"></div>
+      <div class="label top-label">The Order of Fire</div>
+      <svg class="seal" viewBox="0 0 220 220" aria-label="Order of Fire seal">
+        <circle cx="110" cy="110" r="106" fill="none" stroke="#E3BB63" stroke-width="1.1"/>
+        <circle cx="110" cy="110" r="96" fill="none" stroke="#E3BB63" stroke-width="0.6" opacity="0.7"/>
+        <g stroke="#E3BB63" stroke-width="0.7" opacity="0.55">
+          <line x1="110" y1="0" x2="110" y2="9"/><line x1="110" y1="211" x2="110" y2="220"/>
+          <line x1="0" y1="110" x2="9" y2="110"/><line x1="211" y1="110" x2="220" y2="110"/>
+        </g>
+        <image href="../../images/order-of-fire-mark-gilded.svg" x="26" y="26" width="168" height="168"/>
+      </svg>
+      <h1>Solar<span>Idealism</span></h1>
+      <svg class="rays" viewBox="0 0 140 14" aria-hidden="true">
+        <line x1="0" y1="7" x2="58" y2="7" stroke="currentColor" stroke-width="0.6"/>
+        <line x1="82" y1="7" x2="140" y2="7" stroke="currentColor" stroke-width="0.6"/>
+        <use href="#sun" x="63" y="0" width="14" height="14"/>
+      </svg>
+      <p class="sub">Gods, Myth, and Religion<br>for Modern Men</p>
+      <div class="spacer"></div>
+      <div class="label order">orderoffire.com</div>
+    </article>
+
+  </div>
+  <i class="fold" style="left: var(--flap)"></i>
+  <i class="fold" style="left: calc(var(--flap) + var(--wide))"></i>
+</section>
+
+<!-- =================================================================== -->
+<!--  SHEET 2 · INSIDE                                                   -->
+<!-- =================================================================== -->
+<div class="sheet-title"><span>Sheet 2 · Inside</span><span>Opens left to right · right panel folds in first</span></div>
+<section class="sheet" aria-label="Inside">
+  <div class="trim">
+
+    <!-- D · What is Solar Idealism? -->
+    <article class="panel edge-l p-what">
+      <div class="bg"></div>
+      <div class="kicker"><span class="num">I</span><span class="rule"></span><span class="label">The Idea</span></div>
+      <h2>What is Solar Idealism?</h2>
+      <p class="lede">Most people understand that religion is a <b>human universal</b>. We need religion. But throughout all of history, we have also recognized that the gods are man-made.</p>
+
+      <div class="quote">
+        <span class="mark">“</span>
+        <blockquote>If horses or oxen or lions had hands [...] horses would draw the forms of the gods like horses, and oxen like oxen...</blockquote>
+        <cite class="label">Xenophanes · 5th century BC</cite>
+      </div>
+
+      <p class="dropcap">Solar Idealism is a religion that embraces both the importance and the man-made nature of the divine — that we do not have to choose between these two truths.</p>
+      <p>It begins with what has always been true: What have strong, healthy, aspirational men looked up to as divine, throughout all of time? And how can we describe the <b>holy positives</b> in a way that is suitably sacred?</p>
+      <div class="spacer"></div>
+      <div class="sunrule" style="margin-bottom:0"><svg aria-hidden="true"><use href="#sun"/></svg></div>
+    </article>
+
+    <!-- E · The three archetypal gods -->
+    <article class="panel p-three">
+      <div class="bg"></div>
+      <div class="kicker"><span class="num">II</span><span class="rule"></span><span class="label">The Three</span></div>
+      <h2>Not a story to believe in. <em>A story to live by.</em></h2>
+      <p>Solar Idealism does not assert religious myth as a <em>story to believe in</em>, but rather as a <em>story to live by</em>. The three, archetypal Gods of the <b>Father</b>, the <b>Striker</b>, and the <b>Lord of the Earth</b> have found expression in many cultures around the world, and provide a mythic orientation that is at home in human history, and is equally at home in the present.</p>
+
+      <div class="three-list">
+        <div class="arche">
+          <img src="../../images/archetypes/father-light.png" alt="Father glyph">
+          <div>
+            <h3>The Father</h3>
+            <p>It is <em>good</em> for men to be like the law-giving, order-making Father.</p>
+          </div>
+        </div>
+        <div class="arche">
+          <img src="../../images/archetypes/striker-light.png" alt="Striker glyph">
+          <div>
+            <h3>The Striker</h3>
+            <p>It is <em>good</em> for men to be like the martial Striker.</p>
+          </div>
+        </div>
+        <div class="arche">
+          <img src="../../images/archetypes/lord-of-earth-light.png" alt="Lord of the Earth glyph">
+          <div>
+            <h3>The Lord of the Earth</h3>
+            <p>It is <em>good</em> for men to be like the resourceful, diligent, cultivating Lord of the Earth.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="three-close">These divine energies existed before us, but we give them names and shapes, <em>as man has always done</em>.</p>
+      <div class="spacer"></div>
+      <figure class="photo"><img src="../../events/assets/ritual/sun-cross.jpg" alt="A hand-woven sun wheel on a post at sunset"></figure>
+    </article>
+
+    <!-- F · fold-in flap, inner face: The Sun -->
+    <article class="panel flap edge-r p-sun">
+      <div class="bg"></div>
+      <div class="kicker"><span class="num">III</span><span class="rule"></span><span class="label">The Sun</span></div>
+      <svg class="solos" viewBox="0 0 71.79 72" role="img" aria-label="Solos glyph: the Sun"><path fill="currentColor" d="M71.79,35.89C71.79,15.9,55.44-.28,35.38,0,15.93.28.11,16.24,0,35.7c-.1,19.28,15,35.06,34.02,36.04.22.16.49.26.78.26h2.25c.3,0,.57-.1.79-.27,18.92-1.01,33.95-16.67,33.95-35.84ZM66.04,34h-26.59c-.59,0-1.07-.48-1.07-1.07V5.61c0-.46.41-.82.87-.77,14.69,1.57,26.36,13.37,27.75,28.11.05.56-.39,1.05-.95,1.05ZM33.48,5.71v26.97c0,.73-.59,1.31-1.31,1.31H5.74c-.56,0-.99-.48-.94-1.04,1.38-14.73,13.04-26.53,27.71-28.11.52-.06.97.34.97.86ZM5.84,38.89h26.36c.71,0,1.29.58,1.29,1.29v26.16c0,.38-.32.68-.7.64-14.43-1.43-26-12.73-27.86-27.04-.07-.55.36-1.05.92-1.05ZM38.37,65.97v-25.97c0-.62.5-1.12,1.12-1.12h26.38c.6,0,1.06.53.98,1.12-1.87,14.12-13.21,25.3-27.41,26.92-.57.06-1.07-.38-1.07-.95Z"/></svg>
+      <div class="sun-body">
+        <p>Since all beliefs (even the belief in the value of “truth”) are downstream from dispositions of the soul, Solar Idealism elevates <b>the Sun</b> as the energy and spirit that is right to guide men’s values.</p>
+        <p>The life-giving, bright, enduring image of the sun has captured the religious imagination of man since he could first speak, and fire — man’s sacred imitation of the power of the sun — was the first recorded hymn of praise and gratitude.</p>
+        <div class="hymn">Fire was the<br><span>first hymn.</span></div>
+      </div>
+      <figure class="photo"><img src="../../events/assets/ritual/sun-line.jpg" alt="Men standing in a line facing the setting sun"></figure>
+    </article>
+
+  </div>
+  <i class="fold" style="left: var(--wide)"></i>
+  <i class="fold" style="left: calc(2 * var(--wide))"></i>
+</section>
+
+</body>
+</html>

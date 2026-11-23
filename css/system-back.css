@@ -1,0 +1,64 @@
+/*
+  System back tab — a quiet way home to the Brand System from any page
+  built on it (event landings, print pieces). Fixed bottom-left, small,
+  low-contrast until hovered, never printed.
+
+  Usage:
+    <link rel="stylesheet" href="{root}/css/system-back.css">
+    <a class="system-back" href="{root}/">
+      <img src="{root}/images/order-of-fire-mark-gilded.svg" alt="">
+      <span>Brand System</span>
+    </a>
+*/
+.system-back {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 90; /* under page navs (100) */
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 34px;
+  padding: 0 14px 0 11px;
+  border: 1px solid rgba(227, 187, 99, 0.28);
+  border-radius: 2px;
+  background: rgba(21, 12, 5, 0.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: rgba(253, 245, 230, 0.72);
+  font: 600 10px/1 'Work Sans', sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  opacity: 0.82;
+  transition: opacity 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.system-back::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-left: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+  margin-right: -2px;
+  transition: transform 0.3s ease;
+}
+.system-back img { width: 16px; height: 16px; display: block; }
+.system-back:hover,
+.system-back:focus-visible {
+  opacity: 1;
+  color: var(--ivory, #FDF5E6);
+  border-color: rgba(227, 187, 99, 0.7);
+  outline: none;
+}
+.system-back:hover::before { transform: translateX(-3px) rotate(45deg); }
+
+/* Inline variant: sits in the page flow (e.g. above a print preview)
+   instead of floating over artwork. */
+.system-back--inline { position: static; opacity: 0.9; }
+
+@media (max-width: 600px) {
+  .system-back { left: 12px; bottom: 12px; padding: 0 10px 0 9px; }
+  .system-back span { display: none; }
+}
+@media print { .system-back { display: none !important; } }
